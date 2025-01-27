@@ -1,9 +1,13 @@
+import {Task} from "./App.tsx";
+
 export type TodolistItemProps = {
     title: string
+    tasks: Task[]
+    date?: string
 }
 
 export const TodolistItem = (props: TodolistItemProps) => {
-    const {title} = props
+    const {title, tasks, date} = props
 
     return (
         <div>
@@ -13,21 +17,23 @@ export const TodolistItem = (props: TodolistItemProps) => {
                 <button>+</button>
             </div>
             <ul>
-                <li>
-                    <input type="checkbox" checked={true}/> <span>HTML&CSS</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={true}/> <span>JS</span>
-                </li>
-                <li>
-                    <input type="checkbox" checked={false}/> <span>React</span>
-                </li>
+                {
+                    tasks.map(task => {
+                        return (
+                            <li key={task.id}>
+                                <input type="checkbox" checked={task.isDone}/>
+                                <span>{task.title}</span>
+                            </li>
+                        )
+                    })
+                }
             </ul>
             <div>
                 <button>All</button>
                 <button>Active</button>
                 <button>Completed</button>
             </div>
+            <div>{date}</div>
         </div>
     )
 }
