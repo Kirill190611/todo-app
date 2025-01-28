@@ -32,7 +32,7 @@ export const App = () => {
     }
 
     const changeTaskStatus = (id: string, isDone: boolean) => {
-        setTasks(tasks.map(task => task.id === id ? {...task, isDone} : {...task}))
+        setTasks(tasks.map(task => task.id === id ? {...task, isDone} : task))
     }
 
     let filteredTasks = tasks
