@@ -5,10 +5,10 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 
 export type TodolistItemProps = {
     tasks: Task[]
-    deleteTask: (id: string) => void
+    deleteTask: (todolistId: string, id: string) => void
     changeFilter: (todolistId: string,filter: FilterValues) => void
-    createTask: (title: string) => void
-    changeTaskStatus: (id: string, isDone: boolean) => void
+    createTask: (todolistId: string, title: string) => void
+    changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
     todolist: Todolist
 }
 
@@ -21,7 +21,7 @@ export const TodolistItem = (props: TodolistItemProps) => {
 
     const createTaskHandler = () => {
         if (taskTitle.trim() !== '') {
-            createTask(taskTitle.trim())
+            createTask(todolistId, taskTitle.trim())
             setTaskTitle('')
         } else {
             setError('Title is required')
@@ -62,11 +62,11 @@ export const TodolistItem = (props: TodolistItemProps) => {
                         {
                             tasks.map(task => {
                                 const deleteTaskHandler = () => {
-                                    deleteTask(task.id)
+                                    deleteTask(todolistId ,task.id)
                                 }
 
                                 const changeTaskStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                                    changeTaskStatus(task.id, event.currentTarget.checked)
+                                    changeTaskStatus(todolistId ,task.id, event.currentTarget.checked)
                                 }
 
                                 return (
