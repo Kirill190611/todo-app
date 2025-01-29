@@ -22,3 +22,10 @@
 .isDone {
   opacity: 0.5;
 }
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

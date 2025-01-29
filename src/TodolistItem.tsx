@@ -10,10 +10,11 @@ export type TodolistItemProps = {
     createTask: (todolistId: string, title: string) => void
     changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
     todolist: Todolist
+    deleteTodolist: (todolistId: string) => void
 }
 
 export const TodolistItem = (props: TodolistItemProps) => {
-    const {tasks, deleteTask, changeFilter, createTask, changeTaskStatus, todolist} = props
+    const {tasks, deleteTask, changeFilter, createTask, changeTaskStatus, todolist, deleteTodolist} = props
     const {filter,title, todolistId} = todolist
 
     const [taskTitle, setTaskTitle] = useState('')
@@ -43,9 +44,16 @@ export const TodolistItem = (props: TodolistItemProps) => {
         changeFilter(todolistId, filter)
     }
 
+    const deleteTodolistHandler = () => {
+        deleteTodolist(todolistId)
+    }
+
     return (
         <div>
-            <h3>{title}</h3>
+            <div className='container'>
+                <h3>{title}</h3>
+                <Button title='X' onClick={deleteTodolistHandler}/>
+            </div>
             <div>
                 <input className={error ? 'error' : ''}
                        value={taskTitle}
