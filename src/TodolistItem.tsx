@@ -6,7 +6,7 @@ import {ChangeEvent, KeyboardEvent, useState} from "react";
 export type TodolistItemProps = {
     tasks: Task[]
     deleteTask: (id: string) => void
-    changeFilter: (filter: FilterValues) => void
+    changeFilter: (todolistId: string,filter: FilterValues) => void
     createTask: (title: string) => void
     changeTaskStatus: (id: string, isDone: boolean) => void
     todolist: Todolist
@@ -14,7 +14,7 @@ export type TodolistItemProps = {
 
 export const TodolistItem = (props: TodolistItemProps) => {
     const {tasks, deleteTask, changeFilter, createTask, changeTaskStatus, todolist} = props
-    const {filter,title} = todolist
+    const {filter,title, todolistId} = todolist
 
     const [taskTitle, setTaskTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
@@ -37,6 +37,10 @@ export const TodolistItem = (props: TodolistItemProps) => {
         if (event.key === 'Enter') {
             createTaskHandler()
         }
+    }
+
+    const changeFilterHandler = (filter: FilterValues) => {
+        changeFilter(todolistId, filter)
     }
 
     return (
@@ -80,13 +84,13 @@ export const TodolistItem = (props: TodolistItemProps) => {
             <div>
                 <Button className={filter === 'all' ? 'active-filter' : ''}
                         title='All'
-                        onClick={() => changeFilter('all')}/>
+                        onClick={() => changeFilterHandler('all')}/>
                 <Button className={filter === 'active' ? 'active-filter' : ''}
                         title='Active'
-                        onClick={() => changeFilter('active')}/>
+                        onClick={() => changeFilterHandler('active')}/>
                 <Button className={filter === 'completed' ? 'active-filter' : ''}
                         title='Completed'
-                        onClick={() => changeFilter('completed')}/>
+                        onClick={() => changeFilterHandler('completed')}/>
             </div>
         </div>
     )
