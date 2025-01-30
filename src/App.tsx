@@ -5,12 +5,13 @@ import {v1} from "uuid";
 import {CreateItemForm} from "./components/CreateItemForm.tsx";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
+import {containerSx} from "./styles/TodolistItem.styles.ts";
+import {NavButton} from "./NavButton.ts";
 
 export type Task = {
     id: string
@@ -91,18 +92,22 @@ export const App = () => {
 
     return (
         <div className="app">
-            <AppBar position='static'>
+            <AppBar position='static' sx={{mb: '30px'}}>
                 <Toolbar>
-                    <Container maxWidth='lg'>
+                    <Container maxWidth='lg' sx={containerSx}>
                         <IconButton color='inherit'>
                             <MenuIcon />
                         </IconButton>
-                        <Button color='inherit'>Sign In</Button>
+                        <div>
+                            <NavButton>Sign In</NavButton>
+                            <NavButton>Sign Out</NavButton>
+                            <NavButton background={'dodgerblue'}>FAQ</NavButton>
+                        </div>
                     </Container>
                 </Toolbar>
             </AppBar>
             <Container maxWidth='lg'>
-                <Grid container>
+                <Grid container sx={{mb: '30px'}}>
                     <CreateItemForm onCreateItem={createTodolist} />
                 </Grid>
                 <Grid container spacing={8}>
@@ -120,7 +125,7 @@ export const App = () => {
 
                             return (
                                 <Grid key={todolist.todolistId}>
-                                    <Paper >
+                                    <Paper sx={{p: '20px'}}>
                                         <TodolistItem key={todolist.todolistId}
                                                       todolist={todolist}
                                                       tasks={filteredTasks}

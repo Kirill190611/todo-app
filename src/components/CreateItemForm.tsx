@@ -1,6 +1,9 @@
 import {ChangeEvent, KeyboardEvent, useState} from "react";
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IconButton from '@mui/material/IconButton';
+import Box from "@mui/material/Box";
+import {containerCreateItemFormSx} from "../styles/CreateItemForm.styles.ts";
 
 type Props = {
     onCreateItem: (title: string) => void
@@ -33,7 +36,7 @@ export const CreateItemForm = (props: Props) => {
     }
 
     return (
-        <div>
+        <Box sx={containerCreateItemFormSx}>
             <TextField label='Please enter task title'
                        variant='outlined'
                        className={error ? 'error' : ''}
@@ -43,7 +46,11 @@ export const CreateItemForm = (props: Props) => {
                        helperText={error}
                        onChange={changeItemTitleHandler}
                        onKeyDown={createItemOnEnterHandler}/>
-            <Button variant='contained' onClick={createItemHandler}>+</Button>
-        </div>
+            <IconButton color='primary'
+                        onClick={createItemHandler}
+                        size='large'>
+                <AddBoxIcon/>
+            </IconButton>
+        </Box>
     )
 }
