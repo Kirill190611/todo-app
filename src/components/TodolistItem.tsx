@@ -1,11 +1,14 @@
-import './App.css'
-import {FilterValues, Task, Todolist} from "./App.tsx";
+import '../App.css'
+import {FilterValues, Task, Todolist} from "../App.tsx";
 import {ChangeEvent} from "react";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button'
+import Checkbox from '@mui/material/Checkbox';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 export type TodolistItemProps = {
     tasks: Task[]
@@ -64,7 +67,7 @@ export const TodolistItem = (props: TodolistItemProps) => {
                 tasks.length === 0 ? (
                     <p>There is no any data</p>
                 ) : (
-                    <ul>
+                    <List>
                         {
                             tasks.map(task => {
                                 const deleteTaskHandler = () => {
@@ -80,19 +83,19 @@ export const TodolistItem = (props: TodolistItemProps) => {
                                 }
 
                                 return (
-                                    <li className={task.isDone ? 'isDone' : ''} key={task.id}>
-                                        <input type="checkbox"
-                                               checked={task.isDone}
-                                               onChange={changeTaskStatusHandler}/>
-                                        <EditableSpan value={task.title} onChange={changeTaskTitleHandler}/>
+                                    <ListItem className={task.isDone ? 'isDone' : ''} key={task.id}>
+                                        <Checkbox checked={task.isDone}
+                                                  onChange={changeTaskStatusHandler}/>
+                                        <EditableSpan value={task.title}
+                                                      onChange={changeTaskTitleHandler}/>
                                         <IconButton onClick={deleteTaskHandler}>
                                             <DeleteIcon />
                                         </IconButton>
-                                    </li>
+                                    </ListItem>
                                 )
                             })
                         }
-                    </ul>
+                    </List>
                 )
             }
             <div>

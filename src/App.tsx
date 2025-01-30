@@ -1,8 +1,8 @@
 import './App.css'
-import {TodolistItem} from "./TodolistItem.tsx";
+import {TodolistItem} from "./components/TodolistItem.tsx";
 import {useState} from "react";
 import {v1} from "uuid";
-import {CreateItemForm} from "./CreateItemForm.tsx";
+import {CreateItemForm} from "./components/CreateItemForm.tsx";
 
 export type Task = {
     id: string
