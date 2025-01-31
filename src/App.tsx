@@ -1,4 +1,3 @@
-import './App.css'
 import {TodolistItem} from "./components/TodolistItem.tsx";
 import {useState} from "react";
 import {v1} from "uuid";
