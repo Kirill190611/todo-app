@@ -25,7 +25,6 @@ beforeEach(() => {
 
 test('correct todo should be deleted', () => {
     // 2. Actions
-
     const endState = todolistReducer(startState, deleteTodolistAC(todolistId1))
 
     // 3.Checking that state were changed based on action
