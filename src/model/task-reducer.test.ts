@@ -1,6 +1,6 @@
 import {TasksState} from "../App.tsx";
 import {beforeEach, expect, test} from "vitest";
-import {deleteTaskAC, taskReducer} from "./task-reducer.ts";
+import {createTaskAC, deleteTaskAC, taskReducer} from "./task-reducer.ts";
 import {createTodolistAC, deleteTodolistAC} from "./todolist-reducer.ts";
 import {v1} from "uuid";
 
@@ -59,4 +59,15 @@ test('correct task should be deleted', () => {
             { id: '3', title: 'tea', isDone: false },
         ],
     })
+})
+
+test('correct task should be created at correct array', () => {
+    const title = 'juice'
+    const endState = taskReducer(startState, createTaskAC({todolistId: 'todolistId2', title}))
+
+    expect(endState.todolistId1.length).toBe(3)
+    expect(endState.todolistId2.length).toBe(4)
+    expect(endState.todolistId2[0].id).toBeDefined()
+    expect(endState.todolistId2[0].title).toBe(title)
+    expect(endState.todolistId2[0].isDone).toBe(false)
 })
