@@ -1,7 +1,7 @@
 import {TasksState} from "../App.tsx";
 import {beforeEach, expect, test} from "vitest";
 import {taskReducer} from "./task-reducer.ts";
-import {createTodolistAC} from "./todolist-reducer.ts";
+import {createTodolistAC, deleteTodolistAC} from "./todolist-reducer.ts";
 import {v1} from "uuid";
 
 let startState: TasksState = {}
@@ -34,4 +34,13 @@ test('array should be created for new todo', () => {
 
     expect(keys.length).toBe(3)
     expect(endState[newKey]).toEqual([])
+})
+
+test('property with todolistId should be deleted', () => {
+    const endState = taskReducer(startState, deleteTodolistAC('todolistId2'))
+
+    const keys = Object.keys(endState)
+
+    expect(keys.length).toBe(1)
+    expect(endState['todolistId2']).toBeUndefined()
 })
