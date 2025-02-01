@@ -1,6 +1,6 @@
 import {TasksState} from "../App.tsx";
 import {beforeEach, expect, test} from "vitest";
-import {changeTaskStatusAC, createTaskAC, deleteTaskAC, taskReducer} from "./task-reducer.ts";
+import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, taskReducer} from "./task-reducer.ts";
 import {createTodolistAC, deleteTodolistAC} from "./todolist-reducer.ts";
 import {v1} from "uuid";
 
@@ -77,4 +77,12 @@ test('correct task should be change own status', () => {
 
     expect(endState.todolistId1.length).toBe(3)
     expect(endState.todolistId2[1].isDone).toBe(false)
+})
+
+test('correct task should be change own title', () => {
+    const title = '123 123'
+    const endState = taskReducer(startState, changeTaskTitleAC({ todolistId: 'todolistId2', taskId: '2', title: title }))
+
+    expect(endState.todolistId1.length).toBe(3)
+    expect(endState.todolistId2[1].title).toBe(title)
 })
