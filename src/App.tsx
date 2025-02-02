@@ -21,8 +21,8 @@ import {
     deleteTodolistAC,
 } from "./model/todolist-reducer.ts";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "./model/task-reducer.ts";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "./app/store.ts";
+import {useAppDispatch} from "./common/hooks/useAppDispatch.ts";
+import {useAppSelector} from "./common/hooks/useAppSelector.ts";
 
 export type Task = {
     id: string
@@ -43,9 +43,9 @@ export type FilterValues = 'all' | 'active' | 'completed'
 type ThemeMode = 'light' | 'dark'
 
 export const App = () => {
-    const todolists = useSelector<RootState, Todolist[]>(state => state.todolists)
-    const tasks = useSelector<RootState, TasksState>(state => state.tasks)
-    const dispatch = useDispatch()
+    const todolists = useAppSelector(state => state.todolists)
+    const tasks = useAppSelector(state => state.tasks)
+    const dispatch = useAppDispatch()
 
     const [themeMode, setThemeMode] = useState<ThemeMode>('light')
 
