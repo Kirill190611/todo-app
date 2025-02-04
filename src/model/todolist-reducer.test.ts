@@ -1,5 +1,5 @@
 import {beforeEach, expect, test} from "vitest";
-import {Todolist} from "../App.tsx";
+import {Todolist} from "../app/App.tsx";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
