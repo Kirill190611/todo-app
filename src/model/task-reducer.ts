@@ -4,6 +4,11 @@ import {createAction, createReducer, nanoid} from "@reduxjs/toolkit";
 
 const initialState: TasksState = {}
 
+export const deleteTaskAC = createAction<{todolistId: string, taskId: string}>('tasks/delete-task')
+export const createTaskAC = createAction<{todolistId: string, title: string}>('tasks/create-task')
+export const changeTaskStatusAC = createAction<{todolistId: string, taskId: string, isDone: boolean}>('tasks/change-task-status')
+export const changeTaskTitleAC = createAction<{todolistId: string; title: string; taskId: string}>('tasks/change-task-title')
+
 export const taskReducer = createReducer(initialState, builder => {
     builder
         .addCase(createTodolistAC, (state, action) => {
@@ -34,13 +39,3 @@ export const taskReducer = createReducer(initialState, builder => {
             }
         })
 })
-
-//Action creators:
-
-export const deleteTaskAC = createAction<{todolistId: string, taskId: string}>('tasks/delete-task')
-
-export const createTaskAC = createAction<{todolistId: string, title: string}>('tasks/create-task')
-
-export const changeTaskStatusAC = createAction<{todolistId: string, taskId: string, isDone: boolean}>('tasks/change-task-status')
-
-export const changeTaskTitleAC = createAction<{todolistId: string; title: string; taskId: string}>('tasks/change-task-title')
