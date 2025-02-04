@@ -1,6 +1,5 @@
 import {TodolistItem} from "./components/TodolistItem.tsx";
 import {useState} from "react";
-import {v1} from "uuid";
 import {CreateItemForm} from "./components/CreateItemForm.tsx";
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,8 +16,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
-    createTodolistAC,
-    deleteTodolistAC,
+    createTodolistAC, deleteTodolistAC,
 } from "./model/todolist-reducer.ts";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "./model/task-reducer.ts";
 import {useAppDispatch} from "./common/hooks/useAppDispatch.ts";
@@ -77,11 +75,10 @@ export const App = () => {
         dispatch(changeTaskTitleAC({todolistId, title, taskId: id}))
     }
     const deleteTodolist = (todolistId: string) => {
-        dispatch(deleteTodolistAC(todolistId))
+        dispatch(deleteTodolistAC({id: todolistId}))
     }
     const createTodolist = (title: string) => {
-        const id = v1()
-        dispatch(createTodolistAC({title, id}))
+        dispatch(createTodolistAC(title))
     }
     const changeTodolistTitle = (id: string, title: string) => {
         dispatch(changeTodolistTitleAC({id, title}))
