@@ -2,7 +2,6 @@ import {TasksState} from "../App.tsx";
 import {beforeEach, expect, test} from "vitest";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC, taskReducer} from "./task-reducer.ts";
 import {createTodolistAC, deleteTodolistAC} from "./todolist-reducer.ts";
-import {v1} from "uuid";
 
 let startState: TasksState = {}
 
@@ -23,8 +22,7 @@ beforeEach(() => {
 
 test('array should be created for new todo', () => {
     const title = 'New todolist'
-    const id = v1()
-    const endState = taskReducer(startState, createTodolistAC({title, id}))
+    const endState = taskReducer(startState, createTodolistAC(title))
 
     const keys = Object.keys(endState)
     const newKey = keys.find(key => key !== 'todolistId1' && key !== 'todolistId2')
@@ -63,7 +61,7 @@ test('correct task should be deleted', () => {
 
 test('correct task should be created at correct array', () => {
     const title = 'juice'
-    const endState = taskReducer(startState, createTaskAC({todolistId: 'todolistId2', title}))
+    const endState = taskReducer(startState, createTaskAC('todolistId2', title))
 
     expect(endState.todolistId1.length).toBe(3)
     expect(endState.todolistId2.length).toBe(4)

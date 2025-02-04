@@ -1,5 +1,4 @@
 import {beforeEach, expect, test} from "vitest";
-import {v1} from "uuid";
 import {Todolist} from "../App.tsx";
 import {
     changeTodolistFilterAC,
@@ -8,14 +7,15 @@ import {
     deleteTodolistAC,
     todolistReducer
 } from "./todolist-reducer.ts";
+import {nanoid} from "@reduxjs/toolkit";
 
 let todolistId1: string
 let todolistId2: string
 let startState: Todolist[] = []
 
 beforeEach(() => {
-    todolistId1 = v1()
-    todolistId2 = v1()
+    todolistId1 = nanoid()
+    todolistId2 = nanoid()
 
     startState = [
         { todolistId: todolistId1, title: 'What to learn', filter: 'all' },
@@ -25,7 +25,7 @@ beforeEach(() => {
 
 test('correct todo should be deleted', () => {
     // 2. Actions
-    const endState = todolistReducer(startState, deleteTodolistAC(todolistId1))
+    const endState = todolistReducer(startState, deleteTodolistAC({id: todolistId1}))
 
     // 3.Checking that state were changed based on action
     expect(endState.length).toBe(1);
@@ -35,8 +35,7 @@ test('correct todo should be deleted', () => {
 test('correct todo should be created', () => {
     // 2. Actions
     const title = 'New todo'
-    const id = v1()
-    const endState = todolistReducer(startState, createTodolistAC({ title, id }))
+    const endState = todolistReducer(startState, createTodolistAC(title))
 
     // 3.Checking that state were changed based on action
     expect(endState.length).toBe(3)

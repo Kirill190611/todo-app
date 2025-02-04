@@ -32,13 +32,14 @@ export const todolistReducer = createReducer(initialState, builder => {
 export const deleteTodolistAC = createAction<{id: string}>('todolists/delete-todolist')
 
 export const createTodolistAC = createAction('todolists/create-todolist', (title: string) => {
-    return {payload: {title, id: nanoid()}}
+    return {
+        payload: {
+            title,
+            id: nanoid()
+        }
+    }
 })
 
 export const changeTodolistTitleAC = createAction<{id: string, title: string}>('todolists/change-todolist-title')
 
 export const changeTodolistFilterAC = createAction<{id: string, filter: FilterValues}>('todolists/change-todolist-filter')
-
-//Action types:
-export type DeleteTodolistAction = ReturnType<typeof deleteTodolistAC>
-export type CreateTodolistAction = ReturnType<typeof createTodolistAC>
