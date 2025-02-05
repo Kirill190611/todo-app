@@ -39,7 +39,7 @@ test('correct todo should be created', () => {
 
     // 3.Checking that state were changed based on action
     expect(endState.length).toBe(3)
-    expect(endState[0].title).toBe(title)
+    expect(endState[2].title).toBe(title)
 })
 
 test('correct todolist should change own title', () => {
