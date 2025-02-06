@@ -1,16 +1,9 @@
-import {TodolistItem} from "../components/TodolistItem.tsx";
-import {CreateItemForm} from "../components/CreateItemForm.tsx";
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import {TodolistItem} from "@/common/components/TodolistItem.tsx";
+import {CreateItemForm} from "@/common/components/CreateItemForm.tsx";
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid2';
 import Paper from '@mui/material/Paper';
-import {containerSx} from "../styles/TodolistItem.styles.ts";
-import {NavButton} from "../NavButton.ts";
 import {ThemeProvider} from '@mui/material/styles';
-import Switch from '@mui/material/Switch';
 import CssBaseline from '@mui/material/CssBaseline';
 import {
     changeTodolistFilterAC,
@@ -23,9 +16,9 @@ import {useAppDispatch} from "../common/hooks/useAppDispatch.ts";
 import {useAppSelector} from "../common/hooks/useAppSelector.ts";
 import {selectTodolists} from "../model/todolists-selectors.ts";
 import {selectTasks} from "../model/tasks-selectors.ts";
-import {selectThemeMode} from "./app-selectors.ts";
-import {changeThemeModeAC} from "./app-reducer.ts";
-import {getTheme} from "../common/theme/theme.ts";
+import {getTheme} from "@/common/theme/theme.ts";
+import {selectThemeMode} from "@/app/app-selectors.ts";
+import {Header} from "@/common/components/Header/Header.tsx";
 
 export type Task = {
     id: string
@@ -48,13 +41,10 @@ export const App = () => {
     const tasks = useAppSelector(selectTasks)
     const themeMode = useAppSelector(selectThemeMode)
 
-    const dispatch = useAppDispatch()
-
     const theme = getTheme(themeMode)
 
-    const changeThemeMode = () => {
-        dispatch(changeThemeModeAC({themeMode: themeMode === 'light' ? 'dark' : 'light'}))
-    }
+    const dispatch = useAppDispatch()
+
     const deleteTask = (todolistId: string, id: string) => {
         dispatch(deleteTaskAC({todolistId, taskId: id}))
     }
@@ -84,21 +74,7 @@ export const App = () => {
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <div className="app">
-                <AppBar position='static' sx={{mb: '30px'}}>
-                    <Toolbar>
-                        <Container maxWidth='lg' sx={containerSx}>
-                            <IconButton color='inherit'>
-                                <MenuIcon/>
-                            </IconButton>
-                            <div>
-                                <NavButton>Sign In</NavButton>
-                                <NavButton>Sign Out</NavButton>
-                                <NavButton background={theme.palette.primary.dark}>FAQ</NavButton>
-                                <Switch color='default' onChange={changeThemeMode} />
-                            </div>
-                        </Container>
-                    </Toolbar>
-                </AppBar>
+                <Header />
                 <Container maxWidth='lg'>
                     <Grid container sx={{mb: '30px'}}>
                         <CreateItemForm onCreateItem={createTodolist}/>

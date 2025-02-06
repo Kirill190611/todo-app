@@ -1,5 +1,5 @@
-import '../app/App.css'
-import {FilterValues, Task, Todolist} from "../app/App.tsx";
+import '../../app/App.css'
+import {FilterValues, Task, Todolist} from "../../app/App.tsx";
 import {ChangeEvent} from "react";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-import {containerSx, getListItemSx} from "../styles/TodolistItem.styles.ts";
+import {containerSx, getListItemSx} from "@/styles/TodolistItem.styles.ts";
 
 export type TodolistItemProps = {
     tasks: Task[]

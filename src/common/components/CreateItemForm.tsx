@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IconButton from '@mui/material/IconButton';
 import Box from "@mui/material/Box";
-import {containerCreateItemFormSx} from "../styles/CreateItemForm.styles.ts";
+import {containerCreateItemFormSx} from "@/styles/CreateItemForm.styles.ts";
 
 type Props = {
     onCreateItem: (title: string) => void
