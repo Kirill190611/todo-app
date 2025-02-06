@@ -1,5 +1,4 @@
 import '../../app/App.css'
-import {FilterValues, Task, Todolist} from "../../app/App.tsx";
 import {ChangeEvent} from "react";
 import {CreateItemForm} from "./CreateItemForm.tsx";
 import {EditableSpan} from "./EditableSpan.tsx";
@@ -11,6 +10,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import {containerSx, getListItemSx} from "@/styles/TodolistItem.styles.ts";
+import {Task} from "@/model/task-reducer.ts";
+import {FilterValues} from "@/common/components/Header/Main/Main.tsx";
+import {Todolist} from "@/model/todolist-reducer.ts";
 
 export type TodolistItemProps = {
     tasks: Task[]

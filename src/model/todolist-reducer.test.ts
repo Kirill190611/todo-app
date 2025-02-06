@@ -1,10 +1,9 @@
 import {beforeEach, expect, test} from "vitest";
-import {Todolist} from "../app/App.tsx";
 import {
     changeTodolistFilterAC,
     changeTodolistTitleAC,
     createTodolistAC,
-    deleteTodolistAC,
+    deleteTodolistAC, Todolist,
     todolistReducer
 } from "./todolist-reducer.ts";
 import {nanoid} from "@reduxjs/toolkit";
