@@ -11,21 +11,20 @@ import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import {containerSx, getListItemSx} from "@/styles/TodolistItem.styles.ts";
 import {FilterValues} from "@/common/components/Header/Main/Main.tsx";
-import {changeTodolistFilterAC, changeTodolistTitleAC, deleteTodolistAC, Todolist} from "@/model/todolist-reducer.ts";
+import {changeTodolistFilterAC, Todolist} from "@/model/todolist-reducer.ts";
 import {useAppSelector} from "@/common/hooks/useAppSelector.ts";
 import {selectTasks} from "@/model/tasks-selectors.ts";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch.ts";
 import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "@/model/task-reducer.ts";
+import {TodolistTitle} from "@/common/components/TodolistTitle.tsx";
 
 export type TodolistItemProps = {
     todolist: Todolist
 }
 
 export const TodolistItem = (props: TodolistItemProps) => {
-    const {
-        todolist,
-    } = props
-    const {filter,title, todolistId} = todolist
+    const {todolist} = props
+    const {filter, todolistId} = todolist
 
     const dispatch = useAppDispatch()
 
@@ -49,25 +48,9 @@ export const TodolistItem = (props: TodolistItemProps) => {
         dispatch(changeTodolistFilterAC({id: todolistId, filter}))
     }
 
-    const deleteTodolist = () => {
-        dispatch(deleteTodolistAC({id: todolistId}))
-    }
-
-    const changeTodolistTitle = (title: string) => {
-        dispatch(changeTodolistTitleAC({id: todolistId, title}))
-    }
-
     return (
         <div>
-            <div className='container'>
-                <h3>
-                    <EditableSpan value={title}
-                                  onChange={changeTodolistTitle} />
-                </h3>
-                <IconButton onClick={deleteTodolist}>
-                    <DeleteIcon />
-                </IconButton>
-            </div>
+            <TodolistTitle todolist={todolist}/>
             <CreateItemForm onCreateItem={createTask} />
             {
                 filteredTasks.length === 0 ? (
