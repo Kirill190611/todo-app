@@ -10,50 +10,51 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import {containerSx, getListItemSx} from "@/styles/TodolistItem.styles.ts";
-import {Task} from "@/model/task-reducer.ts";
 import {FilterValues} from "@/common/components/Header/Main/Main.tsx";
-import {Todolist} from "@/model/todolist-reducer.ts";
+import {changeTodolistFilterAC, changeTodolistTitleAC, deleteTodolistAC, Todolist} from "@/model/todolist-reducer.ts";
+import {useAppSelector} from "@/common/hooks/useAppSelector.ts";
+import {selectTasks} from "@/model/tasks-selectors.ts";
+import {useAppDispatch} from "@/common/hooks/useAppDispatch.ts";
+import {changeTaskStatusAC, changeTaskTitleAC, createTaskAC, deleteTaskAC} from "@/model/task-reducer.ts";
 
 export type TodolistItemProps = {
-    tasks: Task[]
-    deleteTask: (todolistId: string, id: string) => void
-    changeFilter: (todolistId: string,filter: FilterValues) => void
-    createTask: (todolistId: string, title: string) => void
-    changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
     todolist: Todolist
-    deleteTodolist: (todolistId: string) => void
-    changeTaskTitle: (todolistId: string, id: string, title: string) => void
-    changeTodolistTitle: (todolistId: string, title: string) => void
 }
 
 export const TodolistItem = (props: TodolistItemProps) => {
     const {
-        tasks,
-        deleteTask,
-        changeFilter,
-        createTask,
-        changeTaskStatus,
         todolist,
-        deleteTodolist,
-        changeTaskTitle,
-        changeTodolistTitle
     } = props
     const {filter,title, todolistId} = todolist
 
-    const createTaskHandler = (title: string) => {
-        createTask(todolistId, title)
+    const dispatch = useAppDispatch()
+
+    const tasks = useAppSelector(selectTasks)
+
+    const todolistTasks = tasks[todolist.todolistId]
+    let filteredTasks = todolistTasks
+
+    if (todolist.filter === 'active') {
+        filteredTasks = todolistTasks.filter(task => !task.isDone)
+    }
+    if (todolist.filter === 'completed') {
+        filteredTasks = todolistTasks.filter(task => task.isDone)
     }
 
-    const changeFilterHandler = (filter: FilterValues) => {
-        changeFilter(todolistId, filter)
+    const createTask = (title: string) => {
+        dispatch(createTaskAC({todolistId, title}))
     }
 
-    const deleteTodolistHandler = () => {
-        deleteTodolist(todolistId)
+    const changeFilter = (filter: FilterValues) => {
+        dispatch(changeTodolistFilterAC({id: todolistId, filter}))
     }
 
-    const changeTodolistTitleHandler = (title: string) => {
-        changeTodolistTitle(todolistId, title)
+    const deleteTodolist = () => {
+        dispatch(deleteTodolistAC({id: todolistId}))
+    }
+
+    const changeTodolistTitle = (title: string) => {
+        dispatch(changeTodolistTitleAC({id: todolistId, title}))
     }
 
     return (
@@ -61,30 +62,30 @@ export const TodolistItem = (props: TodolistItemProps) => {
             <div className='container'>
                 <h3>
                     <EditableSpan value={title}
-                                  onChange={changeTodolistTitleHandler} />
+                                  onChange={changeTodolistTitle} />
                 </h3>
-                <IconButton onClick={deleteTodolistHandler}>
+                <IconButton onClick={deleteTodolist}>
                     <DeleteIcon />
                 </IconButton>
             </div>
-            <CreateItemForm onCreateItem={createTaskHandler} />
+            <CreateItemForm onCreateItem={createTask} />
             {
-                tasks.length === 0 ? (
+                filteredTasks.length === 0 ? (
                     <p>There is no any data</p>
                 ) : (
                     <List>
                         {
-                            tasks.map(task => {
-                                const deleteTaskHandler = () => {
-                                    deleteTask(todolistId ,task.id)
+                            filteredTasks.map(task => {
+                                const deleteTask = () => {
+                                    dispatch(deleteTaskAC({todolistId, taskId: task.id}))
                                 }
 
-                                const changeTaskStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
-                                    changeTaskStatus(todolistId ,task.id, event.currentTarget.checked)
+                                const changeTaskStatus = (event: ChangeEvent<HTMLInputElement>) => {
+                                    dispatch(changeTaskStatusAC({todolistId, taskId: task.id, isDone: event.currentTarget.checked}))
                                 }
 
-                                const changeTaskTitleHandler = (title: string) => {
-                                    changeTaskTitle(todolistId, task.id, title)
+                                const changeTaskTitle = (title: string) => {
+                                    dispatch(changeTaskTitleAC({todolistId, taskId: task.id, title}))
                                 }
 
                                 return (
@@ -92,11 +93,11 @@ export const TodolistItem = (props: TodolistItemProps) => {
                                               key={task.id}>
                                         <div>
                                             <Checkbox checked={task.isDone}
-                                                      onChange={changeTaskStatusHandler}/>
+                                                      onChange={changeTaskStatus}/>
                                             <EditableSpan value={task.title}
-                                                          onChange={changeTaskTitleHandler}/>
+                                                          onChange={changeTaskTitle}/>
                                         </div>
-                                        <IconButton onClick={deleteTaskHandler}>
+                                        <IconButton onClick={deleteTask}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </ListItem>
@@ -109,13 +110,13 @@ export const TodolistItem = (props: TodolistItemProps) => {
             <Box sx={containerSx}>
                 <Button variant={filter === 'all' ? 'outlined' : 'text'}
                         color='inherit'
-                        onClick={() => changeFilterHandler('all')}>All</Button>
+                        onClick={() => changeFilter('all')}>All</Button>
                 <Button variant={filter === 'active' ? 'outlined' : 'text'}
                         color='primary'
-                        onClick={() => changeFilterHandler('active')}>Active</Button>
+                        onClick={() => changeFilter('active')}>Active</Button>
                 <Button variant={filter === 'completed' ? 'outlined' : 'text'}
                         color='secondary'
-                        onClick={() => changeFilterHandler('completed')}>Completed</Button>
+                        onClick={() => changeFilter('completed')}>Completed</Button>
             </Box>
         </div>
     )

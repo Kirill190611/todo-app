@@ -20,7 +20,7 @@ export const Main = () => {
                 <CreateItemForm onCreateItem={createTodolist}/>
             </Grid>
             <Grid container spacing={8}>
-            <Todolists />
+                <Todolists />
             </Grid>
         </Container>
     )
