@@ -1,8 +1,9 @@
-import {EditableSpan} from "@/common/components/EditableSpan.tsx";
+import {EditableSpan} from "@/common/components/EditableSpan/EditableSpan.tsx";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {changeTodolistTitleAC, deleteTodolistAC, Todolist} from "@/model/todolist-reducer.ts";
+import {changeTodolistTitleAC, deleteTodolistAC, Todolist} from "@/features/todolists/model/todolist-reducer.ts";
 import {useAppDispatch} from "@/common/hooks/useAppDispatch.ts";
+import styles from './TodolistTitle.module.css'
 
 type Props = {
     todolist: Todolist
@@ -23,7 +24,7 @@ export const TodolistTitle = (props: Props) => {
     }
 
     return (
-        <div className='container'>
+        <div className={styles.container}>
             <h3>
                 <EditableSpan value={title}
                               onChange={changeTodolistTitle}/>
