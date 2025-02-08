@@ -5,6 +5,7 @@ import {getTheme} from "@/common/theme/theme.ts";
 import {selectThemeMode} from "@/app/app-selectors.ts";
 import {Header} from "@/common/components/Header/Header.tsx";
 import {Main} from "@/app/Main.tsx";
+import styles from './App.module.css'
 
 export const App = () => {
     const themeMode = useAppSelector(selectThemeMode)
@@ -13,7 +14,7 @@ export const App = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <div className="app">
+            <div className={styles.app}>
                 <CssBaseline />
                 <Header />
                 <Main />
