@@ -24,6 +24,20 @@ export type CreateTodolistResponse = {
     fieldsErrors: FieldError[]
 }
 
+export type DeleteTodolistResponse = {
+    data: Todolist
+    resultCode: number
+    messages: string[]
+    fieldsErrors: FieldError[]
+}
+
+export type UpdateTodolistResponse = {
+    data: Todolist
+    resultCode: number
+    messages: string[]
+    fieldsErrors: FieldError[]
+}
+
 export const AppHttpRequests = () => {
     const [todolists, setTodolists] = useState<Todolist[]>([])
     const [tasks, setTasks] = useState<any>({})
@@ -49,9 +63,25 @@ export const AppHttpRequests = () => {
             .then(res => setTodolists([res.data.data.item, ...todolists]))
     }
 
-    const deleteTodolist = (id: string) => {}
+    const deleteTodolist = (id: string) => {
+        axios.delete<DeleteTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'API-KEY': apiKey
+            }
+        })
+            .then(() => setTodolists(todolists.filter(todolist => todolist.id !== id)))
+    }
 
-    const changeTodolistTitle = (id: string, title: string) => {}
+    const changeTodolistTitle = (id: string, title: string) => {
+        axios.put<UpdateTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'API-KEY': apiKey
+            }
+        })
+            .then(() => setTodolists(todolists.map(todolist => todolist.id === id ? {...todolist, title} : todolist)))
+    }
 
     const createTask = (todolistId: string, title: string) => {}
 
