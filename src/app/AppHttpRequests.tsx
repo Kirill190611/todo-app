@@ -2,16 +2,52 @@ import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
 import {CreateItemForm} from '@/common/components/CreateItemForm/CreateItemForm'
 import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
+import axios from "axios";
+import {apiKey, token} from "@/authData.ts";
+
+export type Todolist = {
+    addedDate: string
+    id: string
+    order: number
+    title: string
+}
+
+export type FieldError = {
+    error: string
+    field: string
+}
+
+export type CreateTodolistResponse = {
+    data: { item:  Todolist}
+    resultCode: number
+    messages: string[]
+    fieldsErrors: FieldError[]
+}
 
 export const AppHttpRequests = () => {
-    const [todolists, setTodolists] = useState<any>([])
+    const [todolists, setTodolists] = useState<Todolist[]>([])
     const [tasks, setTasks] = useState<any>({})
 
     useEffect(() => {
-        // get todolists
+        axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+            .then(res => {
+            setTodolists(res.data)
+        })
     }, [])
 
-    const createTodolist = (title: string) => {}
+    const createTodolist = (title: string) => {
+        axios.post<CreateTodolistResponse>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'API-KEY': apiKey
+            }
+        })
+            .then(res => setTodolists([res.data.data.item, ...todolists]))
+    }
 
     const deleteTodolist = (id: string) => {}
 
@@ -28,7 +64,7 @@ export const AppHttpRequests = () => {
     return (
         <div style={{margin: '20px'}}>
             <CreateItemForm onCreateItem={createTodolist}/>
-            {todolists.map((todolist: any) => (
+            {todolists.map(todolist => (
                 <div key={todolist.id} style={container}>
                     <div>
                         <EditableSpan value={todolist.title}
