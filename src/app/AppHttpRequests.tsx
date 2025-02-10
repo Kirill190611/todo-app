@@ -18,7 +18,7 @@ export type FieldError = {
 }
 
 export type CreateTodolistResponse = {
-    data: { item:  Todolist}
+    data: { item:  Todolist }
     resultCode: number
     messages: string[]
     fieldsErrors: FieldError[]
