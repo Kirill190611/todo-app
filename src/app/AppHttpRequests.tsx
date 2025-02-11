@@ -1,9 +1,8 @@
 import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
-import axios from "axios";
-import {apiKey, token} from "@/authData.ts";
 import {CreateItemForm, EditableSpan} from "@/common/components";
 import {BaseResponse} from "@/common/types";
+import {instance} from "@/common/instance/instance.ts";
 
 export type Todolist = {
     addedDate: string
@@ -17,43 +16,24 @@ export const AppHttpRequests = () => {
     const [tasks, setTasks] = useState<any>({})
 
     useEffect(() => {
-        axios.get<Todolist[]>('https://social-network.samuraijs.com/api/1.1/todo-lists', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        instance.get<Todolist[]>('/todo-lists')
             .then(res => {
-            setTodolists(res.data)
+                setTodolists(res.data)
         })
     }, [])
 
     const createTodolist = (title: string) => {
-        axios.post<BaseResponse<{ item: Todolist }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'API-KEY': apiKey
-            }
-        })
+        instance.post<BaseResponse<{ item: Todolist }>>('todo-lists', {title})
             .then(res => setTodolists([res.data.data.item, ...todolists]))
     }
 
     const deleteTodolist = (id: string) => {
-        axios.delete<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'API-KEY': apiKey
-            }
-        })
+        instance.delete<BaseResponse>(`/todo-lists/${id}`)
             .then(() => setTodolists(todolists.filter(todolist => todolist.id !== id)))
     }
 
     const changeTodolistTitle = (id: string, title: string) => {
-        axios.put<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'API-KEY': apiKey
-            }
-        })
+        instance.put<BaseResponse>(`/todo-lists/${id}`, {title})
             .then(() => setTodolists(todolists.map(todolist => todolist.id === id ? {...todolist, title} : todolist)))
     }
 
