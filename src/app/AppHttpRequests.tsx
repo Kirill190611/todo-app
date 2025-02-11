@@ -4,38 +4,13 @@ import {CreateItemForm} from '@/common/components/CreateItemForm/CreateItemForm'
 import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
 import axios from "axios";
 import {apiKey, token} from "@/authData.ts";
+import {BaseResponse, FieldError} from "@/common/types/types.ts";
 
 export type Todolist = {
     addedDate: string
     id: string
     order: number
     title: string
-}
-
-export type FieldError = {
-    error: string
-    field: string
-}
-
-export type CreateTodolistResponse = {
-    data: { item:  Todolist }
-    resultCode: number
-    messages: string[]
-    fieldsErrors: FieldError[]
-}
-
-export type DeleteTodolistResponse = {
-    data: Todolist
-    resultCode: number
-    messages: string[]
-    fieldsErrors: FieldError[]
-}
-
-export type UpdateTodolistResponse = {
-    data: Todolist
-    resultCode: number
-    messages: string[]
-    fieldsErrors: FieldError[]
 }
 
 export const AppHttpRequests = () => {
@@ -54,7 +29,7 @@ export const AppHttpRequests = () => {
     }, [])
 
     const createTodolist = (title: string) => {
-        axios.post<CreateTodolistResponse>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
+        axios.post<BaseResponse<{ item: Todolist }>>('https://social-network.samuraijs.com/api/1.1/todo-lists', {title}, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'API-KEY': apiKey
@@ -64,7 +39,7 @@ export const AppHttpRequests = () => {
     }
 
     const deleteTodolist = (id: string) => {
-        axios.delete<DeleteTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
+        axios.delete<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'API-KEY': apiKey
@@ -74,7 +49,7 @@ export const AppHttpRequests = () => {
     }
 
     const changeTodolistTitle = (id: string, title: string) => {
-        axios.put<UpdateTodolistResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
+        axios.put<BaseResponse>(`https://social-network.samuraijs.com/api/1.1/todo-lists/${id}`, {title}, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'API-KEY': apiKey
