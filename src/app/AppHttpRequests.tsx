@@ -4,7 +4,7 @@ import {CreateItemForm} from '@/common/components/CreateItemForm/CreateItemForm'
 import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
 import axios from "axios";
 import {apiKey, token} from "@/authData.ts";
-import {BaseResponse, FieldError} from "@/common/types/types.ts";
+import {BaseResponse} from "@/common/types/types.ts";
 
 export type Todolist = {
     addedDate: string
