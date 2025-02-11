@@ -5,8 +5,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ListItem from "@mui/material/ListItem";
 import {changeTaskStatusAC, changeTaskTitleAC, deleteTaskAC, Task} from "@/features/todolists/model/task-reducer.ts";
 import {ChangeEvent} from "react";
-import {useAppDispatch} from "@/common/hooks/useAppDispatch.ts";
 import {getListItemSx} from "@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.styles.ts";
+import {useAppDispatch} from "@/common/hooks";
 
 type Props = {
     task: Task

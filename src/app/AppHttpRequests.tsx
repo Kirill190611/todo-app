@@ -1,10 +1,9 @@
 import {type ChangeEvent, type CSSProperties, useEffect, useState} from 'react'
 import Checkbox from '@mui/material/Checkbox'
-import {CreateItemForm} from '@/common/components/CreateItemForm/CreateItemForm'
-import {EditableSpan} from '@/common/components/EditableSpan/EditableSpan'
 import axios from "axios";
 import {apiKey, token} from "@/authData.ts";
-import {BaseResponse} from "@/common/types/types.ts";
+import {CreateItemForm, EditableSpan} from "@/common/components";
+import {BaseResponse} from "@/common/types";
 
 export type Todolist = {
     addedDate: string
