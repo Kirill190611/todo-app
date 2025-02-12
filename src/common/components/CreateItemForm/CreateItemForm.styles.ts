@@ -1,6 +1,6 @@
-import {SxProps} from "@mui/material";
+import { SxProps } from '@mui/material'
 
 export const containerCreateItemFormSx: SxProps = {
-    display: 'flex',
-    alignItems: 'center'
+  display: 'flex',
+  alignItems: 'center',
 }
