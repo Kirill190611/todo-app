@@ -16,3 +16,10 @@ export type GetTasksResponse = {
   items: DomainTask[]
   totalCount: number
 }
+
+export type PostTasksResponse = {
+  data: { item: DomainTask }
+  fieldsErrors: string[]
+  messages: string[]
+  resultCode: number
+}
