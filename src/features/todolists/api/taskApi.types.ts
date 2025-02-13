@@ -23,3 +23,12 @@ export type PostTasksResponse = {
   messages: string[]
   resultCode: number
 }
+
+export type UpdateTaskModel = {
+  title: string
+  description: string
+  status: number
+  priority: number
+  startDate: string
+  deadline: string
+}

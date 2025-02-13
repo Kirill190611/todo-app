@@ -4,7 +4,7 @@ import { CreateItemForm, EditableSpan } from '@/common/components'
 import { Todolist } from '@/features/todolists/api/todolistApi.types.ts'
 import { todolistApi } from '@/features/todolists/api/todolistApi.ts'
 import { taskApi } from '@/features/todolists/api/taskApi.ts'
-import { DomainTask } from '@/features/todolists/api/taskApi.types.ts'
+import { DomainTask, UpdateTaskModel } from '@/features/todolists/api/taskApi.types.ts'
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -43,7 +43,20 @@ export const AppHttpRequests = () => {
 
   const deleteTask = (todolistId: string, taskId: string) => {}
 
-  const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: any) => {}
+  const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: DomainTask) => {
+    const model: UpdateTaskModel = {
+      description: task.description,
+      title: task.title,
+      priority: task.priority,
+      startDate: task.startDate,
+      status: e.target.checked ? 2 : 0,
+      deadline: task.deadline,
+    }
+
+    taskApi
+      .changeTaskStatus({ todolistId: task.todoListId, taskId: task.id, model })
+      .then((res) => console.log(res.data))
+  }
 
   const changeTaskTitle = (task: any, title: string) => {}
 
@@ -57,9 +70,9 @@ export const AppHttpRequests = () => {
             <button onClick={() => deleteTodolist(todolist.id)}>x</button>
           </div>
           <CreateItemForm onCreateItem={(title) => createTask(todolist.id, title)} />
-          {tasks[todolist.id]?.map((task: any) => (
+          {tasks[todolist.id]?.map((task) => (
             <div key={task.id}>
-              <Checkbox checked={task.isDone} onChange={(e) => changeTaskStatus(e, task)} />
+              <Checkbox checked={task.status === 2} onChange={(e) => changeTaskStatus(e, task)} />
               <EditableSpan value={task.title} onChange={(title) => changeTaskTitle(task, title)} />
               <button onClick={() => deleteTask(todolist.id, task.id)}>x</button>
             </div>
