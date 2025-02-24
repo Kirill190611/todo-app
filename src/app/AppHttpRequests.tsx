@@ -23,7 +23,11 @@ export const AppHttpRequests = () => {
   }, [])
 
   const createTodolist = (title: string) => {
-    todolistApi.createTodolist({ title }).then((res) => setTodolists([res.data.data.item, ...todolists]))
+    todolistApi.createTodolist({ title }).then((res) => {
+      const todolist = res.data.data.item
+      setTodolists([todolist, ...todolists])
+      //setTasks({ ...tasks, [todolist.id]: [] })
+    })
   }
 
   const deleteTodolist = (id: string) => {
@@ -46,18 +50,21 @@ export const AppHttpRequests = () => {
   const deleteTask = (todolistId: string, taskId: string) => {}
 
   const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: DomainTask) => {
-    /*    const model: UpdateTaskModel = {
+    const model: UpdateTaskModel = {
       description: task.description,
       title: task.title,
       priority: task.priority,
       startDate: task.startDate,
-      status: e.target.checked ? 2 : 0,
+      status: e.currentTarget.checked ? 2 : 0,
       deadline: task.deadline,
     }
 
-    taskApi
-      .changeTaskStatus({ todolistId: task.todoListId, taskId: task.id, model })
-      .then((res) => console.log(res.data))*/
+    taskApi.changeTaskStatus({ todolistId: task.todoListId, taskId: task.id, model }).then(() =>
+      setTasks({
+        ...tasks,
+        [task.todoListId]: tasks[task.todoListId].map((el) => (el.id === task.id ? { ...el, ...model } : el)),
+      })
+    )
   }
 
   const changeTaskTitle = (task: any, title: string) => {}
