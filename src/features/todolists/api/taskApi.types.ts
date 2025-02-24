@@ -1,10 +1,10 @@
 export type DomainTask = {
-  description: string
+  description: string | null
   title: string
   status: number
   priority: number
-  startDate: string
-  deadline: string
+  startDate: string | null
+  deadline: string | null
   id: string
   todoListId: string
   order: number

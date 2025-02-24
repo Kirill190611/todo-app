@@ -8,11 +8,11 @@ export const todolistApi = {
   },
   createTodolist(payload: { title: string }) {
     const { title } = payload
-    return instance.post('/todo-lists', { title })
+    return instance.post<BaseResponse<{ item: Todolist }>>('/todo-lists', { title })
   },
   deleteTodolist(payload: { id: string }) {
     const { id } = payload
-    return instance.delete(`/todo-lists/${id}`)
+    return instance.delete<BaseResponse>(`/todo-lists/${id}`)
   },
   changeTodolistTitle(payload: { id: string; title: string }) {
     const { title, id } = payload
