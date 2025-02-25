@@ -5,6 +5,7 @@ import { Todolist } from '@/features/todolists/api/todolistApi.types.ts'
 import { todolistApi } from '@/features/todolists/api/todolistApi.ts'
 import { taskApi } from '@/features/todolists/api/taskApi.ts'
 import { DomainTask, UpdateTaskModel } from '@/features/todolists/api/taskApi.types.ts'
+import { TaskStatus } from '@/common/enums'
 
 export const AppHttpRequests = () => {
   const [todolists, setTodolists] = useState<Todolist[]>([])
@@ -55,7 +56,7 @@ export const AppHttpRequests = () => {
       title: task.title,
       priority: task.priority,
       startDate: task.startDate,
-      status: e.currentTarget.checked ? 2 : 0,
+      status: e.currentTarget.checked ? TaskStatus.Completed : TaskStatus.New,
       deadline: task.deadline,
     }
 
@@ -82,7 +83,7 @@ export const AppHttpRequests = () => {
           {!!tasks[todolist.id] &&
             tasks[todolist.id].map((task) => (
               <div key={task.id}>
-                <Checkbox checked={task.status === 2} onChange={(e) => changeTaskStatus(e, task)} />
+                <Checkbox checked={task.status === TaskStatus.Completed} onChange={(e) => changeTaskStatus(e, task)} />
                 <EditableSpan value={task.title} onChange={(title) => changeTaskTitle(task, title)} />
                 <button onClick={() => deleteTask(todolist.id, task.id)}>x</button>
               </div>
