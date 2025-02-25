@@ -48,7 +48,11 @@ export const AppHttpRequests = () => {
     })
   }
 
-  const deleteTask = (todolistId: string, taskId: string) => {}
+  const deleteTask = (todolistId: string, taskId: string) => {
+    taskApi
+      .deleteTask({ todolistId, taskId })
+      .then(() => setTasks({ ...tasks, [todolistId]: tasks[todolistId].filter((el) => el.id !== taskId) }))
+  }
 
   const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>, task: DomainTask) => {
     const model: UpdateTaskModel = {
@@ -68,7 +72,16 @@ export const AppHttpRequests = () => {
     )
   }
 
-  const changeTaskTitle = (task: any, title: string) => {}
+  const changeTaskTitle = (task: DomainTask, title: string) => {
+    taskApi
+      .changeTaskTitle({ todolistId: task.todoListId, taskId: task.id, title })
+      .then(() =>
+        setTasks({
+          ...tasks,
+          [task.todoListId]: tasks[task.todoListId].map((el) => (el.id === task.id ? { ...el, title } : el)),
+        })
+      )
+  }
 
   return (
     <div style={{ margin: '20px' }}>
