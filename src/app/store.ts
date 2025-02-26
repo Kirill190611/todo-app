@@ -1,16 +1,14 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import { tasksReducer } from '../features/todolists/model/task-slice.ts'
-import { appReducer } from '@/app/app-slice.ts'
-import { todolistsReducer } from '@/features/todolists/model/todolist-slice.ts'
-
-const rootReducer = combineReducers({
-  app: appReducer,
-  tasks: tasksReducer,
-  todolists: todolistsReducer,
-})
+import { configureStore } from '@reduxjs/toolkit'
+import { taskSlice, tasksReducer } from '@/features/todolists/model/task-slice.ts'
+import { todolistsReducer, todolistsSlice } from '@/features/todolists/model/todolist-slice.ts'
+import { appReducer, appSlice } from '@/app/app-slice.ts'
 
 export const store = configureStore({
-  reducer: rootReducer,
+  reducer: {
+    [taskSlice.name]: tasksReducer,
+    [todolistsSlice.name]: todolistsReducer,
+    [appSlice.name]: appReducer,
+  },
 })
 
 export type RootState = ReturnType<typeof store.getState>
