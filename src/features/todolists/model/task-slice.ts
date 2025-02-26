@@ -36,5 +36,5 @@ export const taskSlice = createSlice({
   }),
 })
 
-export const {} = taskSlice.actions
+export const { deleteTaskAC, changeTaskStatusAC, changeTaskTitleAC, createTaskAC } = taskSlice.actions
 export const tasksReducer = taskSlice.reducer
