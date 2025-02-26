@@ -38,5 +38,6 @@ export const todolistsSlice = createSlice({
   }),
 })
 
-export const { deleteTodolistAC, changeTodolistTitleAC, changeTodolistFilterAC } = todolistsSlice.actions
+export const { deleteTodolistAC, changeTodolistTitleAC, changeTodolistFilterAC, createTodolistAC } =
+  todolistsSlice.actions
 export const todolistsReducer = todolistsSlice.reducer
