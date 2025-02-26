@@ -4,9 +4,9 @@ import {
   changeTaskTitleAC,
   createTaskAC,
   deleteTaskAC,
-  taskReducer,
+  taskSlice,
   TasksState,
-} from '../task-reducer.ts'
+} from '../task-slice.ts'
 import { createTodolistAC, deleteTodolistAC } from '../todolist-slice.ts'
 
 let startState: TasksState = {}
@@ -28,7 +28,7 @@ beforeEach(() => {
 
 test('array should be created for new todo', () => {
   const title = 'New todolist'
-  const endState = taskReducer(startState, createTodolistAC(title))
+  const endState = taskSlice(startState, createTodolistAC(title))
 
   const keys = Object.keys(endState)
   const newKey = keys.find((key) => key !== 'todolistId1' && key !== 'todolistId2')
@@ -41,7 +41,7 @@ test('array should be created for new todo', () => {
 })
 
 test('property with todolistId should be deleted', () => {
-  const endState = taskReducer(startState, deleteTodolistAC({ id: 'todolistId2' }))
+  const endState = taskSlice(startState, deleteTodolistAC({ id: 'todolistId2' }))
 
   const keys = Object.keys(endState)
 
@@ -50,7 +50,7 @@ test('property with todolistId should be deleted', () => {
 })
 
 test('correct task should be deleted', () => {
-  const endState = taskReducer(startState, deleteTaskAC({ todolistId: 'todolistId2', taskId: '2' }))
+  const endState = taskSlice(startState, deleteTaskAC({ todolistId: 'todolistId2', taskId: '2' }))
 
   expect(endState).toEqual({
     todolistId1: [
@@ -67,7 +67,7 @@ test('correct task should be deleted', () => {
 
 test('correct task should be created at correct array', () => {
   const title = 'juice'
-  const endState = taskReducer(startState, createTaskAC({ todolistId: 'todolistId2', title }))
+  const endState = taskSlice(startState, createTaskAC({ todolistId: 'todolistId2', title }))
 
   expect(endState.todolistId1.length).toBe(3)
   expect(endState.todolistId2.length).toBe(4)
@@ -77,10 +77,7 @@ test('correct task should be created at correct array', () => {
 })
 
 test('correct task should be change own status', () => {
-  const endState = taskReducer(
-    startState,
-    changeTaskStatusAC({ todolistId: 'todolistId2', taskId: '2', isDone: false })
-  )
+  const endState = taskSlice(startState, changeTaskStatusAC({ todolistId: 'todolistId2', taskId: '2', isDone: false }))
 
   expect(endState.todolistId1.length).toBe(3)
   expect(endState.todolistId2[1].isDone).toBe(false)
@@ -88,7 +85,7 @@ test('correct task should be change own status', () => {
 
 test('correct task should be change own title', () => {
   const title = '123 123'
-  const endState = taskReducer(startState, changeTaskTitleAC({ todolistId: 'todolistId2', taskId: '2', title: title }))
+  const endState = taskSlice(startState, changeTaskTitleAC({ todolistId: 'todolistId2', taskId: '2', title: title }))
 
   expect(endState.todolistId1.length).toBe(3)
   expect(endState.todolistId2[1].title).toBe(title)
