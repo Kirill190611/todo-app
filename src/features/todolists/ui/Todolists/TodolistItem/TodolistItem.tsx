@@ -1,23 +1,23 @@
 import { CreateItemForm } from '@/common/components/CreateItemForm/CreateItemForm.tsx'
-import { Todolist } from '@/features/todolists/model/todolist-slice.ts'
 import { createTaskAC } from '@/features/todolists/model/task-slice.ts'
 import { TodolistTitle } from '@/features/todolists/ui/Todolists/TodolistItem/TodolistTitle/TodolistTitle.tsx'
 import { Tasks } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/Tasks.tsx'
 import { FilterButtons } from '@/features/todolists/ui/Todolists/TodolistItem/FilterButtons/FilterButtons.tsx'
 import { useAppDispatch } from '@/common/hooks'
+import { DomainTodolist } from '@/features/todolists/model/todolist-slice.ts'
 
 export type TodolistItemProps = {
-  todolist: Todolist
+  todolist: DomainTodolist
 }
 
 export const TodolistItem = (props: TodolistItemProps) => {
   const { todolist } = props
-  const { todolistId } = todolist
+  const { id } = todolist
 
   const dispatch = useAppDispatch()
 
   const createTask = (title: string) => {
-    dispatch(createTaskAC({ todolistId, title }))
+    dispatch(createTaskAC({ todolistId: id, title }))
   }
 
   return (

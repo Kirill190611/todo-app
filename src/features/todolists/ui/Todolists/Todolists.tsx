@@ -4,8 +4,7 @@ import { TodolistItem } from '@/features/todolists/ui/Todolists/TodolistItem/Tod
 import { selectTodolists } from '@/features/todolists/model/todolists-selectors.ts'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { useEffect } from 'react'
-import { todolistApi } from '@/features/todolists/api/todolistApi.ts'
-import { setTodolistAC } from '@/features/todolists/model/todolist-slice.ts'
+import { fetchTodolistsTC } from '@/features/todolists/model/todolist-slice.ts'
 
 export const Todolists = () => {
   const todolists = useAppSelector(selectTodolists)
@@ -13,16 +12,14 @@ export const Todolists = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    todolistApi.getTodolist().then((res) => {
-      dispatch(setTodolistAC({ todolists: res.data }))
-    })
+    dispatch(fetchTodolistsTC())
   }, [])
 
   return (
     <>
       {todolists.map((todolist) => {
         return (
-          <Grid key={todolist.todolistId}>
+          <Grid key={todolist.id}>
             <Paper sx={{ p: '20px' }}>
               <TodolistItem todolist={todolist} />
             </Paper>
