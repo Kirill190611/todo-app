@@ -1,9 +1,9 @@
 import Grid from '@mui/material/Grid2'
 import { CreateItemForm } from '@/common/components/CreateItemForm/CreateItemForm.tsx'
 import Container from '@mui/material/Container'
-import { createTodolistAC } from '@/features/todolists/model/todolist-slice.ts'
 import { Todolists } from '@/features/todolists/ui/Todolists/Todolists.tsx'
 import { useAppDispatch } from '@/common/hooks'
+import { createTodolistTC } from '@/features/todolists/model/todolist-slice.ts'
 
 export type FilterValues = 'all' | 'active' | 'completed'
 
@@ -11,7 +11,7 @@ export const Main = () => {
   const dispatch = useAppDispatch()
 
   const createTodolist = (title: string) => {
-    dispatch(createTodolistAC(title))
+    dispatch(createTodolistTC({ title }))
   }
 
   return (

@@ -2,7 +2,7 @@ import List from '@mui/material/List'
 import { DomainTodolist } from '@/features/todolists/model/todolist-slice.ts'
 import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.tsx'
 import { useAppSelector } from '@/common/hooks'
-import { selectTasks } from '@/features/todolists/model/tasks-selectors.ts'
+import { selectTasks } from '@/features/todolists/model/task-slice.ts'
 
 type Props = {
   todolist: DomainTodolist
