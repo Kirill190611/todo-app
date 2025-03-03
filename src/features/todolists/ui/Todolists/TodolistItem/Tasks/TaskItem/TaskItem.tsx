@@ -3,12 +3,12 @@ import { EditableSpan } from '@/common/components/EditableSpan/EditableSpan.tsx'
 import IconButton from '@mui/material/IconButton'
 import DeleteIcon from '@mui/icons-material/Delete'
 import ListItem from '@mui/material/ListItem'
-import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC } from '@/features/todolists/model/task-slice.ts'
 import { ChangeEvent } from 'react'
 import { getListItemSx } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.styles.ts'
 import { useAppDispatch } from '@/common/hooks'
 import { DomainTask } from '@/features/todolists/api/taskApi.types.ts'
 import { TaskStatus } from '@/common/enums'
+import { changeTaskStatusAC, changeTaskTitleAC, deleteTaskTC } from '@/features/todolists/model/task-slice.ts'
 
 type Props = {
   task: DomainTask
@@ -20,8 +20,6 @@ export const TaskItem = (props: Props) => {
   const { id, status, title } = task
 
   const dispatch = useAppDispatch()
-
-  const isTaskCompleted = status === TaskStatus.Completed
 
   const deleteTask = () => {
     dispatch(deleteTaskTC({ todolistId, taskId: id }))
@@ -41,6 +39,8 @@ export const TaskItem = (props: Props) => {
   const changeTaskTitle = (title: string) => {
     dispatch(changeTaskTitleAC({ todolistId, taskId: id, title }))
   }
+
+  const isTaskCompleted = status === TaskStatus.Completed
 
   return (
     <ListItem sx={getListItemSx(isTaskCompleted)} key={id}>
