@@ -1,17 +1,16 @@
-import List from '@mui/material/List'
-import { DomainTodolist } from '@/features/todolists/model/todolist-slice.ts'
-import { TaskItem } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskItem/TaskItem.tsx'
-import { useAppDispatch, useAppSelector } from '@/common/hooks'
-import { fetchTasksTC, selectTasks } from '@/features/todolists/model/task-slice.ts'
-import { useEffect } from 'react'
 import { TaskStatus } from '@/common/enums'
+import { useAppDispatch, useAppSelector } from '@/common/hooks'
+import { fetchTasksTC, selectTasks } from '@/features/todolists/model/tasks-slice'
+import type { DomainTodolist } from '@/features/todolists/model/todolists-slice'
+import { useEffect } from 'react'
+import { TaskItem } from './TaskItem/TaskItem'
+import List from '@mui/material/List'
 
 type Props = {
   todolist: DomainTodolist
 }
 
-export const Tasks = (props: Props) => {
-  const { todolist } = props
+export const Tasks = ({ todolist }: Props) => {
   const { id, filter } = todolist
 
   const tasks = useAppSelector(selectTasks)
@@ -20,7 +19,6 @@ export const Tasks = (props: Props) => {
 
   const todolistTasks = tasks[id]
   let filteredTasks = todolistTasks
-
   if (filter === 'active') {
     filteredTasks = todolistTasks.filter((task) => task.status === TaskStatus.New)
   }
@@ -35,7 +33,7 @@ export const Tasks = (props: Props) => {
   return (
     <>
       {filteredTasks?.length === 0 ? (
-        <p>There is no any data</p>
+        <p>There are absent any data</p>
       ) : (
         <List>{filteredTasks?.map((task) => <TaskItem key={task.id} task={task} todolistId={id} />)}</List>
       )}

@@ -1,7 +1,5 @@
+import type { RequestStatus } from '@/common/types'
 import { createSlice } from '@reduxjs/toolkit'
-import { RequestStatus } from '@/common/types'
-
-export type ThemeMode = 'light' | 'dark'
 
 export const appSlice = createSlice({
   name: 'app',
@@ -11,7 +9,7 @@ export const appSlice = createSlice({
   },
   selectors: {
     selectThemeMode: (state) => state.themeMode,
-    selectStatus: (state) => state.status,
+    selectAppStatus: (state) => state.status,
   },
   reducers: (create) => ({
     changeThemeModeAC: create.reducer<{ themeMode: ThemeMode }>((state, action) => {
@@ -23,6 +21,8 @@ export const appSlice = createSlice({
   }),
 })
 
+export const { selectThemeMode, selectAppStatus } = appSlice.selectors
 export const { changeThemeModeAC, setAppStatusAC } = appSlice.actions
 export const appReducer = appSlice.reducer
-export const { selectThemeMode, selectStatus } = appSlice.selectors
+
+export type ThemeMode = 'dark' | 'light'

@@ -1,30 +1,27 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react'
+import { type ChangeEvent, type KeyboardEvent, useState } from 'react'
 import TextField from '@mui/material/TextField'
 import AddBoxIcon from '@mui/icons-material/AddBox'
 import IconButton from '@mui/material/IconButton'
-import Box from '@mui/material/Box'
-import { containerCreateItemFormSx } from '@/common/components/CreateItemForm/CreateItemForm.styles.ts'
 
 type Props = {
   onCreateItem: (title: string) => void
 }
 
-export const CreateItemForm = (props: Props) => {
-  const { onCreateItem } = props
-
-  const [error, setError] = useState<string | null>(null)
+export const CreateItemForm = ({ onCreateItem }: Props) => {
   const [title, setTitle] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
   const createItemHandler = () => {
-    if (title.trim() !== '') {
-      onCreateItem(title.trim())
+    const trimmedTitle = title.trim()
+    if (trimmedTitle !== '') {
+      onCreateItem(trimmedTitle)
       setTitle('')
     } else {
       setError('Title is required')
     }
   }
 
-  const changeItemTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeTitleHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.currentTarget.value)
     setError(null)
   }
@@ -36,21 +33,20 @@ export const CreateItemForm = (props: Props) => {
   }
 
   return (
-    <Box sx={containerCreateItemFormSx}>
+    <div>
       <TextField
-        label='Please enter task title'
-        variant='outlined'
-        className={error ? 'error' : ''}
+        label={'Enter a title'}
+        variant={'outlined'}
         value={title}
-        size='small'
+        size={'small'}
         error={!!error}
         helperText={error}
-        onChange={changeItemTitleHandler}
+        onChange={changeTitleHandler}
         onKeyDown={createItemOnEnterHandler}
       />
-      <IconButton color='primary' onClick={createItemHandler} size='large'>
+      <IconButton onClick={createItemHandler} color={'primary'}>
         <AddBoxIcon />
       </IconButton>
-    </Box>
+    </div>
   )
 }

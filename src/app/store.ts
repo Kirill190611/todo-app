@@ -1,20 +1,19 @@
+import { tasksReducer, tasksSlice } from '@/features/todolists/model/tasks-slice'
+import { todolistsReducer, todolistsSlice } from '@/features/todolists/model/todolists-slice'
 import { configureStore } from '@reduxjs/toolkit'
-import { taskSlice, tasksReducer } from '@/features/todolists/model/task-slice.ts'
-import { todolistsReducer, todolistsSlice } from '@/features/todolists/model/todolist-slice.ts'
-import { appReducer, appSlice } from '@/app/app-slice.ts'
+import { appReducer, appSlice } from './app-slice.ts'
 
 export const store = configureStore({
   reducer: {
-    [taskSlice.name]: tasksReducer,
+    [tasksSlice.name]: tasksReducer,
     [todolistsSlice.name]: todolistsReducer,
     [appSlice.name]: appReducer,
   },
 })
 
 export type RootState = ReturnType<typeof store.getState>
-
 export type AppDispatch = typeof store.dispatch
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
+// для возможности обращения к store в консоли браузера
+// @ts-ignore
 window.store = store
