@@ -8,10 +8,12 @@ import AppBar from '@mui/material/AppBar'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { containerSx } from '@/common/styles'
 import { getTheme } from '@/common/theme'
-import { changeThemeModeAC, selectThemeMode } from '@/app/app-slice.ts'
+import { changeThemeModeAC, selectStatus, selectThemeMode } from '@/app/app-slice.ts'
+import LinearProgress from '@mui/material/LinearProgress'
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
+  const status = useAppSelector(selectStatus)
 
   const dispatch = useAppDispatch()
 
@@ -36,6 +38,7 @@ export const Header = () => {
           </div>
         </Container>
       </Toolbar>
+      {status === 'loading' && <LinearProgress />}
     </AppBar>
   )
 }

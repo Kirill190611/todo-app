@@ -3,6 +3,7 @@ import { FilterValues } from '@/app/Main.tsx'
 import { Todolist } from '@/features/todolists/api/todolistApi.types.ts'
 import { todolistApi } from '@/features/todolists/api/todolistApi.ts'
 import { createAppSlice } from '@/common/utils'
+import { setAppStatusAC } from '@/app/app-slice.ts'
 
 export type DomainTodolist = Todolist & {
   filter: FilterValues
@@ -16,13 +17,15 @@ export const todolistsSlice = createAppSlice({
   },
   reducers: (create) => ({
     fetchTodolistsTC: create.asyncThunk(
-      async (_, thunkAPI) => {
+      async (_, { dispatch, rejectWithValue }) => {
         try {
+          dispatch(setAppStatusAC({ status: 'loading' }))
           const res = await todolistApi.getTodolist()
+          dispatch(setAppStatusAC({ status: 'succeeded' }))
           return { todolists: res.data }
         } catch (error) {
-          console.log(error)
-          return thunkAPI.rejectWithValue(null)
+          dispatch(setAppStatusAC({ status: 'failed' }))
+          return rejectWithValue(null)
         }
       },
       {
