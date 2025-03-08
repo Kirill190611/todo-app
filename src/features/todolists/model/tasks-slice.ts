@@ -57,7 +57,8 @@ export const tasksSlice = createAppSlice({
             dispatch(setAppStatusAC({ status: 'failed' }))
             return rejectWithValue(null)
           }
-        } catch (error) {
+        } catch (error: any) {
+          dispatch(setAppErrorAC({ error: error.message }))
           dispatch(setAppStatusAC({ status: 'failed' }))
           return rejectWithValue(null)
         }
