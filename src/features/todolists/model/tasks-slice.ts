@@ -1,10 +1,10 @@
 import { setAppStatusAC } from '@/app/app-slice'
 import type { RootState } from '@/app/store'
-import { createAppSlice, handeServerAppError, handleServerNetworkError } from '@/common/utils'
+import { ResultCode } from '@/common/enums'
+import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
 import { tasksApi } from '@/features/todolists/api/tasksApi'
 import type { DomainTask, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types'
 import { createTodolistTC, deleteTodolistTC } from './todolists-slice'
-import { ResultCode } from '@/common/enums'
 
 export const tasksSlice = createAppSlice({
   name: 'tasks',
@@ -49,7 +49,7 @@ export const tasksSlice = createAppSlice({
             dispatch(setAppStatusAC({ status: 'succeeded' }))
             return { task: res.data.data.item }
           } else {
-            handeServerAppError(res.data, dispatch)
+            handleServerAppError(res.data, dispatch)
             return rejectWithValue(null)
           }
         } catch (error: any) {
@@ -72,7 +72,7 @@ export const tasksSlice = createAppSlice({
             dispatch(setAppStatusAC({ status: 'succeeded' }))
             return payload
           } else {
-            handeServerAppError(res.data, dispatch)
+            handleServerAppError(res.data, dispatch)
             return rejectWithValue(null)
           }
         } catch (error: any) {
@@ -121,7 +121,7 @@ export const tasksSlice = createAppSlice({
             dispatch(setAppStatusAC({ status: 'succeeded' }))
             return { task: res.data.data.item }
           } else {
-            handeServerAppError(res.data, dispatch)
+            handleServerAppError(res.data, dispatch)
             return rejectWithValue(null)
           }
         } catch (error: any) {

@@ -42,9 +42,9 @@ export const CreateItemForm = ({ onCreateItem, disabled }: Props) => {
         size={'small'}
         error={!!error}
         helperText={error}
-        disabled={disabled}
         onChange={changeTitleHandler}
         onKeyDown={createItemOnEnterHandler}
+        disabled={disabled}
       />
       <IconButton onClick={createItemHandler} color={'primary'} disabled={disabled}>
         <AddBoxIcon />

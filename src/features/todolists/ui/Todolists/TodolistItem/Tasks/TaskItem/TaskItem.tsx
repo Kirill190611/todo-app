@@ -3,13 +3,13 @@ import { TaskStatus } from '@/common/enums'
 import { useAppDispatch } from '@/common/hooks'
 import type { DomainTask } from '@/features/todolists/api/tasksApi.types'
 import { deleteTaskTC, updateTaskTC } from '@/features/todolists/model/tasks-slice'
+import type { DomainTodolist } from '@/features/todolists/model/todolists-slice'
 import DeleteIcon from '@mui/icons-material/Delete'
 import Checkbox from '@mui/material/Checkbox'
 import IconButton from '@mui/material/IconButton'
 import ListItem from '@mui/material/ListItem'
 import type { ChangeEvent } from 'react'
 import { getListItemSx } from './TaskItem.styles'
-import { DomainTodolist } from '@/features/todolists/model/todolists-slice.ts'
 
 type Props = {
   task: DomainTask
@@ -44,10 +44,10 @@ export const TaskItem = ({ task, todolist }: Props) => {
   return (
     <ListItem sx={getListItemSx(isTaskCompleted)}>
       <div>
-        <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} />
+        <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} disabled={disabled} />
         <EditableSpan value={task.title} onChange={changeTaskTitle} disabled={disabled} />
       </div>
-      <IconButton onClick={deleteTask}>
+      <IconButton onClick={deleteTask} disabled={disabled}>
         <DeleteIcon />
       </IconButton>
     </ListItem>
