@@ -73,6 +73,7 @@ export const tasksSlice = createAppSlice({
             return payload
           } else {
             handeServerAppError(res.data, dispatch)
+            return rejectWithValue(null)
           }
         } catch (error: any) {
           handleServerNetworkError(error, dispatch)
