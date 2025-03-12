@@ -9,10 +9,25 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import Grid from '@mui/material/Grid2'
 import TextField from '@mui/material/TextField'
+import { useForm } from 'react-hook-form'
+
+type Inputs = {
+  email: string
+  password: string
+  rememberMe: boolean
+}
 
 export const Login = () => {
   const themeMode = useAppSelector(selectThemeMode)
   const theme = getTheme(themeMode)
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>({ defaultValues: { email: '', password: '', rememberMe: false } })
 
   return (
     <Grid container justifyContent={'center'}>
