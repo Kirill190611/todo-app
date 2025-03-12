@@ -53,9 +53,9 @@ export const Login = () => {
           </p>
         </FormLabel>
         <FormGroup>
-          <TextField label='Email' margin='normal' />
-          <TextField type='password' label='Password' margin='normal' />
-          <FormControlLabel label='Remember me' control={<Checkbox />} />
+          <TextField label='Email' margin='normal' {...register('email')} />
+          <TextField type='password' label='Password' margin='normal' {...register('password')} />
+          <FormControlLabel label='Remember me' control={<Checkbox {...register('rememberMe')} />} />
           <Button type='submit' variant='contained' color='primary'>
             Login
           </Button>
