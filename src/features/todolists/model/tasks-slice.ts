@@ -146,11 +146,14 @@ export const tasksSlice = createAppSlice({
         task.title = action.payload.title
       }
     }),
+    clearTasks: create.reducer(() => {
+      return {}
+    }),
   }),
 })
 
 export const { selectTasks } = tasksSlice.selectors
-export const { fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC } = tasksSlice.actions
+export const { fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC, clearTasks } = tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
 
 export type TasksState = Record<string, DomainTask[]>

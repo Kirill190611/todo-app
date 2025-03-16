@@ -123,6 +123,9 @@ export const todolistsSlice = createAppSlice({
         todolist.entityStatus = action.payload.entityStatus
       }
     }),
+    clearTodolists: create.reducer(() => {
+      return []
+    }),
   }),
 })
 
@@ -134,6 +137,7 @@ export const {
   changeTodolistTitleTC,
   changeTodolistFilterAC,
   changeTodolistStatusAC,
+  clearTodolists,
 } = todolistsSlice.actions
 export const todolistsReducer = todolistsSlice.reducer
 
