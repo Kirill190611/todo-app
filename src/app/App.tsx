@@ -5,11 +5,11 @@ import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { getTheme } from '@/common/theme'
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
-import { Routing } from '@/common/routing'
 import { initializeAppTC, selectIsInitialized } from '@/features/auth/model/__tests__/auth-slice.ts'
 import { useEffect } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import styles from './App.module.css'
+import { Outlet } from 'react-router'
 
 export const App = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -30,7 +30,7 @@ export const App = () => {
         {isInitialized && (
           <>
             <Header />
-            <Routing />
+            <Outlet />
           </>
         )}
         {!isInitialized && (
