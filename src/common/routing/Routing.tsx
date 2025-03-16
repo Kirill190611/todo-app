@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router'
 import { Main } from '@/app/Main.tsx'
-import { Login } from '@/features/auth/ui/Login/Login.tsx'
 import { PageNotFound } from '@/common/components/PageNotFound'
+import { Login } from '@/features/auth/ui/Login/Login.tsx'
 
 export const Path = {
   Main: '/',
