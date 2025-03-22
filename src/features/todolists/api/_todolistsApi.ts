@@ -27,6 +27,12 @@ export const todolistsApi = createApi({
         body: { title },
       }),
     }),
+    removeTodolist: builder.mutation<BaseResponse, string>({
+      query: (id) => ({
+        url: `todo-lists/${id}`,
+        method: 'DELETE',
+      }),
+    }),
   }),
 })
 
@@ -39,13 +45,14 @@ export const _todolistsApi = {
   createTodolist(title: string) {
     return instance.post<BaseResponse<{ item: Todolist }>>('todo-lists', { title })
   },
+  deleteTodolist(id: string) {
+    return instance.delete<BaseResponse>(`todo-lists/${id}`)
+  },
   changeTodolistTitle(payload: { id: string; title: string }) {
     const { id, title } = payload
     return instance.put<BaseResponse>(`todo-lists/${id}`, { title })
   },
-  deleteTodolist(id: string) {
-    return instance.delete<BaseResponse>(`todo-lists/${id}`)
-  },
 }
 
-export const { useGetTodolistsQuery, useCreateTodolistMutation } = todolistsApi
+export const { useGetTodolistsQuery, useCreateTodolistMutation, useRemoveTodolistMutation } =
+  todolistsApi

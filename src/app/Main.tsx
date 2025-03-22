@@ -9,8 +9,6 @@ import { Path } from '@/common/routing'
 import { useCreateTodolistMutation } from '@/features/todolists/api/_todolistsApi.ts'
 
 export const Main = () => {
-  // const dispatch = useAppDispatch()
-
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
   const [createTodolist] = useCreateTodolistMutation()
