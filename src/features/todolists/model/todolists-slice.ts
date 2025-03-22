@@ -58,6 +58,7 @@ export const todolistsSlice = createAppSlice({
         },
       }
     ),
+    // OK (Need to delete)
     deleteTodolistTC: create.asyncThunk(
       async (id: string, { dispatch, rejectWithValue }) => {
         try {
@@ -87,6 +88,7 @@ export const todolistsSlice = createAppSlice({
         },
       }
     ),
+    // OK (Need to delete)
     changeTodolistTitleTC: create.asyncThunk(
       async (payload: { id: string; title: string }, { dispatch, rejectWithValue }) => {
         try {
