@@ -1,4 +1,4 @@
-import { selectThemeMode } from '@/app/app-slice'
+import { loginTC, selectIsLoggedIn, selectThemeMode } from '@/app/app-slice'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { getTheme } from '@/common/theme'
 import Button from '@mui/material/Button'
@@ -13,7 +13,6 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import styles from './Login.module.css'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Inputs, loginSchema } from '@/features/auth/lib/schemas'
-import { loginTC, selectIsLoggedIn } from '@/features/auth/model/__tests__/auth-slice.ts'
 import { Navigate } from 'react-router'
 import { Path } from '@/common/routing'
 
