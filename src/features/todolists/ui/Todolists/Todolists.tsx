@@ -4,13 +4,11 @@ import { TodolistItem } from './TodolistItem/TodolistItem'
 import { useGetTodolistsQuery } from '@/features/todolists/api/_todolistsApi.ts'
 
 export const Todolists = () => {
-  const data = useGetTodolistsQuery()
-
-  console.log(data)
+  const { data: todolists } = useGetTodolistsQuery()
 
   return (
     <>
-      {data.data?.map((todolist: any) => (
+      {todolists?.map((todolist) => (
         <Grid key={todolist.id}>
           <Paper sx={{ p: '0 20px 20px 20px' }}>
             <TodolistItem todolist={todolist} />
