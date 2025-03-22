@@ -1,7 +1,13 @@
 import { TaskPriority, TaskStatus } from '@/common/enums'
 import { nanoid } from '@reduxjs/toolkit'
 import { beforeEach, expect, test } from 'vitest'
-import { createTaskTC, deleteTaskTC, tasksReducer, type TasksState, updateTaskTC } from '../tasks-slice'
+import {
+  createTaskTC,
+  deleteTaskTC,
+  tasksReducer,
+  type TasksState,
+  updateTaskTC,
+} from '../tasks-slice'
 import { createTodolistTC, deleteTodolistTC } from '../todolists-slice'
 
 let startState: TasksState = {}
@@ -18,14 +24,50 @@ const taskDefaultValues = {
 beforeEach(() => {
   startState = {
     todolistId1: [
-      { id: '1', title: 'CSS', status: TaskStatus.New, todoListId: 'todolistId1', ...taskDefaultValues },
-      { id: '2', title: 'JS', status: TaskStatus.Completed, todoListId: 'todolistId1', ...taskDefaultValues },
-      { id: '3', title: 'React', status: TaskStatus.New, todoListId: 'todolistId1', ...taskDefaultValues },
+      {
+        id: '1',
+        title: 'CSS',
+        status: TaskStatus.New,
+        todoListId: 'todolistId1',
+        ...taskDefaultValues,
+      },
+      {
+        id: '2',
+        title: 'JS',
+        status: TaskStatus.Completed,
+        todoListId: 'todolistId1',
+        ...taskDefaultValues,
+      },
+      {
+        id: '3',
+        title: 'React',
+        status: TaskStatus.New,
+        todoListId: 'todolistId1',
+        ...taskDefaultValues,
+      },
     ],
     todolistId2: [
-      { id: '1', title: 'bread', status: TaskStatus.New, todoListId: 'todolistId2', ...taskDefaultValues },
-      { id: '2', title: 'milk', status: TaskStatus.Completed, todoListId: 'todolistId2', ...taskDefaultValues },
-      { id: '3', title: 'tea', status: TaskStatus.New, todoListId: 'todolistId2', ...taskDefaultValues },
+      {
+        id: '1',
+        title: 'bread',
+        status: TaskStatus.New,
+        todoListId: 'todolistId2',
+        ...taskDefaultValues,
+      },
+      {
+        id: '2',
+        title: 'milk',
+        status: TaskStatus.Completed,
+        todoListId: 'todolistId2',
+        ...taskDefaultValues,
+      },
+      {
+        id: '3',
+        title: 'tea',
+        status: TaskStatus.New,
+        todoListId: 'todolistId2',
+        ...taskDefaultValues,
+      },
     ],
   }
 })
@@ -187,7 +229,10 @@ test('correct task should change its title', () => {
 test('array should be created for new todolist', () => {
   const title = 'New todolist'
   const todolist = { id: 'todolistId3', title, addedDate: '', order: 0 }
-  const endState = tasksReducer(startState, createTodolistTC.fulfilled({ todolist }, 'requestId', title))
+  const endState = tasksReducer(
+    startState,
+    createTodolistTC.fulfilled({ todolist }, 'requestId', title)
+  )
 
   const keys = Object.keys(endState)
   const newKey = keys.find((k) => k !== 'todolistId1' && k !== 'todolistId2')

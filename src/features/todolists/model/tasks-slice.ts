@@ -3,7 +3,11 @@ import type { RootState } from '@/app/store'
 import { ResultCode } from '@/common/enums'
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
 import { tasksApi } from '@/features/todolists/api/tasksApi'
-import { DomainTask, DomainTaskSchema, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types'
+import {
+  DomainTask,
+  DomainTaskSchema,
+  UpdateTaskModel,
+} from '@/features/todolists/api/tasksApi.types'
 import { createTodolistTC, deleteTodolistTC } from './todolists-slice'
 
 export const tasksSlice = createAppSlice({
@@ -140,12 +144,16 @@ export const tasksSlice = createAppSlice({
         },
       }
     ),
-    changeTaskTitleAC: create.reducer<{ todolistId: string; taskId: string; title: string }>((state, action) => {
-      const task = state[action.payload.todolistId].find((task) => task.id === action.payload.taskId)
-      if (task) {
-        task.title = action.payload.title
+    changeTaskTitleAC: create.reducer<{ todolistId: string; taskId: string; title: string }>(
+      (state, action) => {
+        const task = state[action.payload.todolistId].find(
+          (task) => task.id === action.payload.taskId
+        )
+        if (task) {
+          task.title = action.payload.title
+        }
       }
-    }),
+    ),
     clearTasks: create.reducer(() => {
       return {}
     }),
@@ -153,7 +161,8 @@ export const tasksSlice = createAppSlice({
 })
 
 export const { selectTasks } = tasksSlice.selectors
-export const { fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC, clearTasks } = tasksSlice.actions
+export const { fetchTasksTC, createTaskTC, deleteTaskTC, updateTaskTC, clearTasks } =
+  tasksSlice.actions
 export const tasksReducer = tasksSlice.reducer
 
 export type TasksState = Record<string, DomainTask[]>

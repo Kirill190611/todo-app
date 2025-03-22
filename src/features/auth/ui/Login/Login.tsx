@@ -69,7 +69,12 @@ export const Login = () => {
             </p>
           </FormLabel>
           <FormGroup>
-            <TextField label='Email' margin='normal' error={!!errors.email} {...register('email')} />
+            <TextField
+              label='Email'
+              margin='normal'
+              error={!!errors.email}
+              {...register('email')}
+            />
             {errors.email && <span className={styles.errorMessage}>{errors.email.message}</span>}
             <TextField
               type='password'
@@ -78,14 +83,18 @@ export const Login = () => {
               margin='normal'
               {...register('password')}
             />
-            {errors.password && <span className={styles.errorMessage}>{errors.password.message}</span>}
+            {errors.password && (
+              <span className={styles.errorMessage}>{errors.password.message}</span>
+            )}
             <FormControlLabel
               label='Remember me'
               control={
                 <Controller
                   name='rememberMe'
                   control={control}
-                  render={({ field: { value, ...field } }) => <Checkbox {...field} checked={value} />}
+                  render={({ field: { value, ...field } }) => (
+                    <Checkbox {...field} checked={value} />
+                  )}
                 />
               }
             />
