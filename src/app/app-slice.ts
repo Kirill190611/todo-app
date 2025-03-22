@@ -1,5 +1,4 @@
 import type { RequestStatus } from '@/common/types'
-import { LoginArgs } from '@/features/auth/api/authApi.types.ts'
 import { _authApi } from '@/features/auth/api/_authApi.ts'
 import { ResultCode } from '@/common/enums'
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
@@ -33,23 +32,6 @@ export const appSlice = createAppSlice({
     setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn
     }),
-    loginTC: create.asyncThunk(async (data: LoginArgs, { dispatch, rejectWithValue }) => {
-      try {
-        dispatch(setAppStatusAC({ status: 'loading' }))
-        const res = await _authApi.login(data)
-        if (res.data.resultCode === ResultCode.Success) {
-          dispatch(setAppStatusAC({ status: 'succeeded' }))
-          dispatch(setIsLoggedIn({ isLoggedIn: true }))
-          localStorage.setItem('sn-token', res.data.data.token)
-        } else {
-          handleServerAppError(res.data, dispatch)
-          return rejectWithValue(null)
-        }
-      } catch (error: any) {
-        handleServerNetworkError(error, dispatch)
-        return rejectWithValue(null)
-      }
-    }),
     logoutTC: create.asyncThunk(async (_, { dispatch, rejectWithValue }) => {
       try {
         dispatch(setAppStatusAC({ status: 'loading' }))
@@ -69,37 +51,13 @@ export const appSlice = createAppSlice({
         return rejectWithValue(null)
       }
     }),
-    initializeAppTC: create.asyncThunk(async (_, { dispatch, rejectWithValue }) => {
-      try {
-        dispatch(setAppStatusAC({ status: 'loading' }))
-        const res = await _authApi.me()
-        if (res.data.resultCode === ResultCode.Success) {
-          dispatch(setAppStatusAC({ status: 'succeeded' }))
-          dispatch(setIsLoggedIn({ isLoggedIn: true }))
-        } else {
-          handleServerAppError(res.data, dispatch)
-          return rejectWithValue(null)
-        }
-      } catch (error: any) {
-        handleServerNetworkError(error, dispatch)
-        return rejectWithValue(null)
-      } finally {
-        //dispatch(setIsInitialized({ isInitialized: true }))
-      }
-    }),
   }),
 })
 
 export const { selectThemeMode, selectAppStatus, selectAppError, selectIsLoggedIn } =
   appSlice.selectors
-export const {
-  changeThemeModeAC,
-  setAppStatusAC,
-  setAppErrorAC,
-  setIsLoggedIn,
-  logoutTC,
-  loginTC,
-} = appSlice.actions
+export const { changeThemeModeAC, setAppStatusAC, setAppErrorAC, setIsLoggedIn, logoutTC } =
+  appSlice.actions
 export const appReducer = appSlice.reducer
 
 export type ThemeMode = 'dark' | 'light'
