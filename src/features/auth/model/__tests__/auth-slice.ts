@@ -1,7 +1,7 @@
 import { LoginArgs } from '@/features/auth/api/authApi.types.ts'
 import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
 import { setAppStatusAC } from '@/app/app-slice.ts'
-import { authApi } from '@/features/auth/api/authApi.ts'
+import { _authApi } from '@/features/auth/api/_authApi.ts'
 import { ResultCode } from '@/common/enums'
 import { clearTasks } from '@/features/todolists/model/tasks-slice.ts'
 import { clearTodolists } from '@/features/todolists/model/todolists-slice.ts'
@@ -26,7 +26,7 @@ export const authSlice = createAppSlice({
     loginTC: create.asyncThunk(async (data: LoginArgs, { dispatch, rejectWithValue }) => {
       try {
         dispatch(setAppStatusAC({ status: 'loading' }))
-        const res = await authApi.login(data)
+        const res = await _authApi.login(data)
         if (res.data.resultCode === ResultCode.Success) {
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           dispatch(setIsLoggedIn({ isLoggedIn: true }))
@@ -43,7 +43,7 @@ export const authSlice = createAppSlice({
     logoutTC: create.asyncThunk(async (_, { dispatch, rejectWithValue }) => {
       try {
         dispatch(setAppStatusAC({ status: 'loading' }))
-        const res = await authApi.logout()
+        const res = await _authApi.logout()
         if (res.data.resultCode === ResultCode.Success) {
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           dispatch(setIsLoggedIn({ isLoggedIn: false }))
@@ -62,7 +62,7 @@ export const authSlice = createAppSlice({
     initializeAppTC: create.asyncThunk(async (_, { dispatch, rejectWithValue }) => {
       try {
         dispatch(setAppStatusAC({ status: 'loading' }))
-        const res = await authApi.me()
+        const res = await _authApi.me()
         if (res.data.resultCode === ResultCode.Success) {
           dispatch(setAppStatusAC({ status: 'succeeded' }))
           dispatch(setIsLoggedIn({ isLoggedIn: true }))
