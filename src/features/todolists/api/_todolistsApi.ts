@@ -16,7 +16,7 @@ export const todolistsApi = createApi({
   endpoints: (builder) => ({
     getTodolists: builder.query<DomainTodolist[], void>({
       query: () => 'todo-lists',
-      transformResponse: (todolists: Todolist[]): DomainTodolist[] => {
+      transformResponse: (todolists: Todolist[]) => {
         return todolists.map((todolist) => ({ ...todolist, filter: 'all', entityStatus: 'idle' }))
       },
     }),
@@ -24,7 +24,7 @@ export const todolistsApi = createApi({
 })
 
 export const _todolistsApi = {
-  // OK but need to add types
+  // OK
   getTodolists() {
     return instance.get<Todolist[]>('todo-lists')
   },
