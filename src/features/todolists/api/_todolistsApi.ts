@@ -12,18 +12,11 @@ export const todolistsApi = createApi({
       headers.set('Authorization', `Bearer ${import.meta.env.VITE_AUTH_TOKEN}`)
     },
   }),
-  endpoints: (builder) => {
-    return {
-      getTodolists: builder.query<any, any>({
-        query: () => {
-          return {
-            method: 'GET',
-            url: 'todo-lists',
-          }
-        },
-      }),
-    }
-  },
+  endpoints: (builder) => ({
+    getTodolists: builder.query<any, void>({
+      query: () => 'todo-lists',
+    }),
+  }),
 })
 
 export const _todolistsApi = {
