@@ -5,7 +5,7 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid2'
 import { Navigate } from 'react-router'
 import { Path } from '@/common/routing'
-import { useCreateTodolistMutation } from '@/features/todolists/api/_todolistsApi.ts'
+import { useCreateTodolistMutation } from '@/features/todolists/api/todolistsApi.ts'
 import { selectIsLoggedIn } from '@/app/app-slice.ts'
 
 export const Main = () => {

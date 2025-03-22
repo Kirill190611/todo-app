@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 import CircularProgress from '@mui/material/CircularProgress'
 import styles from './App.module.css'
 import { Outlet } from 'react-router'
-import { useMeQuery } from '@/features/auth/api/_authApi.ts'
+import { useMeQuery } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums'
 
 export const App = () => {

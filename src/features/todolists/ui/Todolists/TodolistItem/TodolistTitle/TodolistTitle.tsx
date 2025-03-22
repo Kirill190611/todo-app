@@ -6,7 +6,7 @@ import styles from './TodolistTitle.module.css'
 import {
   useRemoveTodolistMutation,
   useUpdateTodolistTitleMutation,
-} from '@/features/todolists/api/_todolistsApi.ts'
+} from '@/features/todolists/api/todolistsApi.ts'
 
 type Props = {
   todolist: DomainTodolist

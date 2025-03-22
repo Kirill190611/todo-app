@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Inputs, loginSchema } from '@/features/auth/lib/schemas'
 import { Navigate } from 'react-router'
 import { Path } from '@/common/routing'
-import { useLoginMutation } from '@/features/auth/api/_authApi.ts'
+import { useLoginMutation } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums'
 
 export const Login = () => {
