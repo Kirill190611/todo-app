@@ -1,20 +1,22 @@
-import { useAppDispatch, useAppSelector } from '@/common/hooks'
+import { useAppSelector } from '@/common/hooks'
 import { CreateItemForm } from '@/common/components/CreateItemForm/CreateItemForm'
-import { createTodolistTC } from '@/features/todolists/model/todolists-slice'
 import { Todolists } from '@/features/todolists/ui/Todolists/Todolists'
 import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid2'
 import { selectIsLoggedIn } from '@/features/auth/model/__tests__/auth-slice.ts'
 import { Navigate } from 'react-router'
 import { Path } from '@/common/routing'
+import { useCreateTodolistMutation } from '@/features/todolists/api/_todolistsApi.ts'
 
 export const Main = () => {
-  const dispatch = useAppDispatch()
+  // const dispatch = useAppDispatch()
 
   const isLoggedIn = useAppSelector(selectIsLoggedIn)
 
-  const createTodolist = (title: string) => {
-    dispatch(createTodolistTC(title))
+  const [createTodolist] = useCreateTodolistMutation()
+
+  const addTodolist = (title: string) => {
+    createTodolist(title)
   }
 
   if (!isLoggedIn) {
@@ -24,7 +26,7 @@ export const Main = () => {
   return (
     <Container maxWidth={'lg'}>
       <Grid container sx={{ mb: '30px' }}>
-        <CreateItemForm onCreateItem={createTodolist} />
+        <CreateItemForm onCreateItem={addTodolist} />
       </Grid>
       <Grid container spacing={4}>
         <Todolists />
