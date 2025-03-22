@@ -1,9 +1,9 @@
 import {
   changeThemeModeAC,
-  logoutTC,
   selectAppStatus,
   selectIsLoggedIn,
   selectThemeMode,
+  setIsLoggedIn,
 } from '@/app/app-slice.ts'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { containerSx } from '@/common/styles'
@@ -16,6 +16,10 @@ import IconButton from '@mui/material/IconButton'
 import Switch from '@mui/material/Switch'
 import Toolbar from '@mui/material/Toolbar'
 import LinearProgress from '@mui/material/LinearProgress'
+import { useLogoutMutation } from '@/features/auth/api/_authApi.ts'
+import { ResultCode } from '@/common/enums'
+import { clearTasks } from '@/features/todolists/model/tasks-slice.ts'
+import { clearTodolists } from '@/features/todolists/model/todolists-slice.ts'
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -24,6 +28,8 @@ export const Header = () => {
 
   const dispatch = useAppDispatch()
 
+  const [logout] = useLogoutMutation()
+
   const theme = getTheme(themeMode)
 
   const changeMode = () => {
@@ -31,7 +37,14 @@ export const Header = () => {
   }
 
   const logoutHandler = () => {
-    dispatch(logoutTC())
+    logout().then((res) => {
+      if (res.data?.resultCode === ResultCode.Success) {
+        dispatch(setIsLoggedIn({ isLoggedIn: false }))
+        localStorage.removeItem('sn-token')
+        dispatch(clearTasks())
+        dispatch(clearTodolists())
+      }
+    })
   }
 
   return (

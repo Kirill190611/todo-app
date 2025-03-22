@@ -1,9 +1,5 @@
 import type { RequestStatus } from '@/common/types'
-import { _authApi } from '@/features/auth/api/_authApi.ts'
-import { ResultCode } from '@/common/enums'
-import { createAppSlice, handleServerAppError, handleServerNetworkError } from '@/common/utils'
-import { clearTasks } from '@/features/todolists/model/tasks-slice.ts'
-import { clearTodolists } from '@/features/todolists/model/todolists-slice.ts'
+import { createAppSlice } from '@/common/utils'
 
 export const appSlice = createAppSlice({
   name: 'app',
@@ -32,32 +28,12 @@ export const appSlice = createAppSlice({
     setIsLoggedIn: create.reducer<{ isLoggedIn: boolean }>((state, action) => {
       state.isLoggedIn = action.payload.isLoggedIn
     }),
-    logoutTC: create.asyncThunk(async (_, { dispatch, rejectWithValue }) => {
-      try {
-        dispatch(setAppStatusAC({ status: 'loading' }))
-        const res = await _authApi.logout()
-        if (res.data.resultCode === ResultCode.Success) {
-          dispatch(setAppStatusAC({ status: 'succeeded' }))
-          dispatch(setIsLoggedIn({ isLoggedIn: false }))
-          dispatch(clearTasks())
-          dispatch(clearTodolists())
-          localStorage.removeItem('sn-token')
-        } else {
-          handleServerAppError(res.data, dispatch)
-          return rejectWithValue(null)
-        }
-      } catch (error: any) {
-        handleServerNetworkError(error, dispatch)
-        return rejectWithValue(null)
-      }
-    }),
   }),
 })
 
 export const { selectThemeMode, selectAppStatus, selectAppError, selectIsLoggedIn } =
   appSlice.selectors
-export const { changeThemeModeAC, setAppStatusAC, setAppErrorAC, setIsLoggedIn, logoutTC } =
-  appSlice.actions
+export const { changeThemeModeAC, setAppStatusAC, setAppErrorAC, setIsLoggedIn } = appSlice.actions
 export const appReducer = appSlice.reducer
 
 export type ThemeMode = 'dark' | 'light'
