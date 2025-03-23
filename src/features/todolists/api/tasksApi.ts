@@ -27,10 +27,26 @@ export const tasksApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
+    updateTask: builder.mutation<
+      BaseResponse<{ item: DomainTask }>,
+      { todolistId: string; taskId: string; model: UpdateTaskModel }
+    >({
+      query: ({ todolistId, taskId, model }) => ({
+        url: `todo-lists/${todolistId}/tasks/${taskId}`,
+        method: 'PUT',
+        body: model,
+      }),
+      invalidatesTags: ['Task'],
+    }),
   }),
 })
 
-export const { useGetTasksQuery, useCreateTaskMutation, useRemoveTaskMutation } = tasksApi
+export const {
+  useGetTasksQuery,
+  useCreateTaskMutation,
+  useRemoveTaskMutation,
+  useUpdateTaskMutation,
+} = tasksApi
 
 export const _tasksApi = {
   // OK (need to delete)
@@ -44,6 +60,7 @@ export const _tasksApi = {
       title,
     })
   },
+  // OK (need to delete)
   updateTask(payload: { todolistId: string; taskId: string; model: UpdateTaskModel }) {
     const { todolistId, taskId, model } = payload
     return instance.put<BaseResponse<{ item: DomainTask }>>(
