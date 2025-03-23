@@ -1,8 +1,20 @@
 import { instance } from '@/common/instance'
 import type { BaseResponse } from '@/common/types'
 import type { DomainTask, GetTasksResponse, UpdateTaskModel } from './tasksApi.types'
+import { baseApi } from '@/app/baseApi.ts'
 
-export const tasksApi = {
+export const tasksApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getTasks: builder.query<GetTasksResponse, string>({
+      query: (todolistId) => `todo-lists/${todolistId}/tasks`,
+      providesTags: ['Task'],
+    }),
+  }),
+})
+
+export const { useGetTasksQuery } = tasksApi
+
+export const _tasksApi = {
   getTasks(todolistId: string) {
     return instance.get<GetTasksResponse>(`todo-lists/${todolistId}/tasks`)
   },
