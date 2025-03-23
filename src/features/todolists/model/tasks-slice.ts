@@ -26,6 +26,7 @@ export const tasksSlice = createAppSlice({
       })
   },
   reducers: (create) => ({
+    // OK (need to delete)
     fetchTasksTC: create.asyncThunk(
       async (todolistId: string, { dispatch, rejectWithValue }) => {
         try {
@@ -45,6 +46,7 @@ export const tasksSlice = createAppSlice({
         },
       }
     ),
+    // OK (need to delete)
     createTaskTC: create.asyncThunk(
       async (payload: { todolistId: string; title: string }, { dispatch, rejectWithValue }) => {
         try {
