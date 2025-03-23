@@ -70,6 +70,7 @@ export const tasksSlice = createAppSlice({
         },
       }
     ),
+    // OK (need to delete)
     deleteTaskTC: create.asyncThunk(
       async (payload: { todolistId: string; taskId: string }, { dispatch, rejectWithValue }) => {
         try {
