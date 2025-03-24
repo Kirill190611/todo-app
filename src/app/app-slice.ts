@@ -4,7 +4,7 @@ import { createAppSlice } from '@/common/utils'
 export const appSlice = createAppSlice({
   name: 'app',
   initialState: {
-    themeMode: 'light' as ThemeMode,
+    themeMode: 'dark' as ThemeMode,
     status: 'idle' as RequestStatus,
     error: null as string | null,
     isLoggedIn: false,
