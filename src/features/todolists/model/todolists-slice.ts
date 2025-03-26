@@ -131,6 +131,7 @@ export const todolistsSlice = createAppSlice({
         }
       }
     ),
+    // OK (need to delete)
     clearTodolists: create.reducer(() => {
       return []
     }),

@@ -18,8 +18,7 @@ import Toolbar from '@mui/material/Toolbar'
 import LinearProgress from '@mui/material/LinearProgress'
 import { useLogoutMutation } from '@/features/auth/api/authApi.ts'
 import { ResultCode } from '@/common/enums'
-import { clearTasks } from '@/features/todolists/model/tasks-slice.ts'
-import { clearTodolists } from '@/features/todolists/model/todolists-slice.ts'
+import { baseApi } from '@/app/baseApi.ts'
 
 export const Header = () => {
   const themeMode = useAppSelector(selectThemeMode)
@@ -41,8 +40,7 @@ export const Header = () => {
       if (res.data?.resultCode === ResultCode.Success) {
         dispatch(setIsLoggedIn({ isLoggedIn: false }))
         localStorage.removeItem('sn-token')
-        dispatch(clearTasks())
-        dispatch(clearTodolists())
+        dispatch(baseApi.util.resetApiState())
       }
     })
   }

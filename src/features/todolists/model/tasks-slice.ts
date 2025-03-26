@@ -158,6 +158,7 @@ export const tasksSlice = createAppSlice({
         }
       }
     ),
+    // OK (need to delete)
     clearTasks: create.reducer(() => {
       return {}
     }),
