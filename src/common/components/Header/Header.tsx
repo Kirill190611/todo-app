@@ -36,13 +36,16 @@ export const Header = () => {
   }
 
   const logoutHandler = () => {
-    logout().then((res) => {
-      if (res.data?.resultCode === ResultCode.Success) {
-        dispatch(setIsLoggedIn({ isLoggedIn: false }))
-        localStorage.removeItem('sn-token')
-        dispatch(baseApi.util.resetApiState())
-      }
-    })
+    logout()
+      .then((res) => {
+        if (res.data?.resultCode === ResultCode.Success) {
+          dispatch(setIsLoggedIn({ isLoggedIn: false }))
+          localStorage.removeItem('sn-token')
+        }
+      })
+      .then(() => {
+        dispatch(baseApi.util.invalidateTags(['Todolist', 'Task']))
+      })
   }
 
   return (
