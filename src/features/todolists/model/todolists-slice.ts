@@ -115,6 +115,7 @@ export const todolistsSlice = createAppSlice({
         },
       }
     ),
+    // OK (need to delete)
     changeTodolistFilterAC: create.reducer<{ id: string; filter: FilterValues }>(
       (state, action) => {
         const todolist = state.find((todolist) => todolist.id === action.payload.id)

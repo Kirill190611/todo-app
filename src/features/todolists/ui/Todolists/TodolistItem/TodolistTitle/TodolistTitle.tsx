@@ -4,9 +4,12 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import IconButton from '@mui/material/IconButton'
 import styles from './TodolistTitle.module.css'
 import {
+  todolistsApi,
   useRemoveTodolistMutation,
   useUpdateTodolistTitleMutation,
 } from '@/features/todolists/api/todolistsApi.ts'
+import { useAppDispatch } from '@/common/hooks'
+import { RequestStatus } from '@/common/types'
 
 type Props = {
   todolist: DomainTodolist
@@ -15,11 +18,33 @@ type Props = {
 export const TodolistTitle = ({ todolist }: Props) => {
   const { id, title, entityStatus } = todolist
 
+  const dispatch = useAppDispatch()
+
   const [removeTodolist] = useRemoveTodolistMutation()
   const [updateTodolistTitle] = useUpdateTodolistTitleMutation()
 
+  const changeTodolistStatus = (entityStatus: RequestStatus) => {
+    dispatch(
+      todolistsApi.util.updateQueryData(
+        'getTodolists',
+        undefined,
+        (todolists: DomainTodolist[]) => {
+          const todolist = todolists.find((todolist) => todolist.id === id)
+          if (todolist) {
+            todolist.entityStatus = entityStatus
+          }
+        }
+      )
+    )
+  }
+
   const deleteTodolist = () => {
+    changeTodolistStatus('loading')
     removeTodolist(id)
+      .unwrap()
+      .catch(() => {
+        changeTodolistStatus('idle')
+      })
   }
 
   const changeTodolistTitle = (title: string) => {
