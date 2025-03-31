@@ -1,5 +1,6 @@
 import type { RequestStatus } from '@/common/types'
 import { createAppSlice } from '@/common/utils'
+import { isFulfilled, isPending, isRejected } from '@reduxjs/toolkit'
 
 export const appSlice = createAppSlice({
   name: 'app',
@@ -31,30 +32,15 @@ export const appSlice = createAppSlice({
   }),
   extraReducers: (builder) => {
     builder
-      .addMatcher(
-        (action) => {
-          return action.type.endsWith('/pending')
-        },
-        (state) => {
-          state.status = 'loading'
-        }
-      )
-      .addMatcher(
-        (action) => {
-          return action.type.endsWith('/fulfilled')
-        },
-        (state) => {
-          state.status = 'succeeded'
-        }
-      )
-      .addMatcher(
-        (action) => {
-          return action.type.endsWith('/rejected')
-        },
-        (state) => {
-          state.status = 'failed'
-        }
-      )
+      .addMatcher(isPending, (state) => {
+        state.status = 'loading'
+      })
+      .addMatcher(isFulfilled, (state) => {
+        state.status = 'succeeded'
+      })
+      .addMatcher(isRejected, (state) => {
+        state.status = 'failed'
+      })
   },
 })
 
