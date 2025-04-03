@@ -1,14 +1,14 @@
 import Box from '@mui/material/Box'
-import { containerSx } from '@/common/styles'
 import Skeleton from '@mui/material/Skeleton'
+import styles from './TasksSkeleton.module.css'
 
 export const TasksSkeleton = () => (
-  <Box style={{ padding: '8px 0' }}>
+  <Box className={styles.container}>
     {Array(4)
       .fill(null)
       .map((_, id) => (
-        <Box key={id} sx={containerSx}>
-          <Box sx={containerSx} style={{ gap: '15px' }}>
+        <Box key={id} className={styles.common}>
+          <Box className={styles.tasks}>
             <Skeleton width={20} height={40} />
             <Skeleton width={150} height={40} />
           </Box>

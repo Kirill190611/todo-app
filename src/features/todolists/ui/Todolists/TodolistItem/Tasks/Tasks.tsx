@@ -14,10 +14,6 @@ export const Tasks = ({ todolist }: Props) => {
 
   const { data: tasks, isLoading } = useGetTasksQuery(id)
 
-  if (isLoading) {
-    return <TasksSkeleton />
-  }
-
   let todolistTasks = tasks?.items
 
   if (filter === 'active') {
@@ -25,6 +21,10 @@ export const Tasks = ({ todolist }: Props) => {
   }
   if (filter === 'completed') {
     todolistTasks = todolistTasks?.filter((task) => task.status === TaskStatus.Completed)
+  }
+
+  if (isLoading) {
+    return <TasksSkeleton />
   }
 
   return (
