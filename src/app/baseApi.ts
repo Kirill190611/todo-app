@@ -21,7 +21,7 @@ export const baseApi = createApi({
       if (result.error.status === 403) {
         api.dispatch(setAppErrorAC({ error: '403 Forbidden Error.' }))
       }
-      if (result.error.status === 400) {
+      if (result.error.status === 400 || result.error.status === 500) {
         if (isErrorWithMessage(result.error.data)) {
           api.dispatch(setAppErrorAC({ error: result.error.data.message }))
         } else {
