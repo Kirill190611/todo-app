@@ -14,7 +14,7 @@ export const baseApi = createApi({
     })(args, api, extraOptions)
 
     if (result.error) {
-      if (result.error.status === 'FETCH_ERROR') {
+      if (result.error.status === 'FETCH_ERROR' || result.error.status === 'PARSING_ERROR') {
         api.dispatch(setAppErrorAC({ error: result.error.error }))
       }
     }
