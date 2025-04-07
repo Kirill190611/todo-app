@@ -52,6 +52,8 @@ export const appSlice = createAppSlice({
   },
 })
 
+//2:28:41
+
 export const { selectThemeMode, selectAppStatus, selectAppError, selectIsLoggedIn } =
   appSlice.selectors
 export const { changeThemeModeAC, setAppStatusAC, setAppErrorAC, setIsLoggedIn } = appSlice.actions

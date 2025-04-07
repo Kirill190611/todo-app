@@ -4,6 +4,8 @@ import { TaskItem } from './TaskItem/TaskItem'
 import List from '@mui/material/List'
 import { useGetTasksQuery } from '@/features/todolists/api/tasksApi.ts'
 import { TasksSkeleton } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksSkeleton/TasksSkeleton.tsx'
+import { useAppDispatch } from '@/common/hooks'
+import { setAppErrorAC } from '@/app/app-slice.ts'
 
 type Props = {
   todolist: DomainTodolist
@@ -12,7 +14,9 @@ type Props = {
 export const Tasks = ({ todolist }: Props) => {
   const { id, filter } = todolist
 
-  const { data: tasks, isLoading } = useGetTasksQuery(id)
+  const { data: tasks, isLoading, error } = useGetTasksQuery(id)
+
+  const dispatch = useAppDispatch()
 
   let todolistTasks = tasks?.items
 
@@ -25,6 +29,15 @@ export const Tasks = ({ todolist }: Props) => {
 
   if (isLoading) {
     return <TasksSkeleton />
+  }
+
+  if (error) {
+    if ('status' in error) {
+      const errorMessage = 'error' in error ? error.error : JSON.stringify(error.data)
+      dispatch(setAppErrorAC({ error: JSON.stringify(errorMessage) }))
+    } else {
+      dispatch(setAppErrorAC({ error: error.message || 'Oops. Some error occurred' }))
+    }
   }
 
   return (
