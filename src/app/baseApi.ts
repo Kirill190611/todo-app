@@ -14,25 +14,33 @@ export const baseApi = createApi({
       },
     })(args, api, extraOptions)
 
+    let error = 'Oops. Some error happened.'
+
     if (result.error) {
-      if (
-        result.error.status === 'FETCH_ERROR' ||
-        result.error.status === 'PARSING_ERROR' ||
-        result.error.status === 'CUSTOM_ERROR'
-      ) {
-        api.dispatch(setAppErrorAC({ error: result.error.error }))
+      switch (result.error.status) {
+        case 'FETCH_ERROR':
+        case 'PARSING_ERROR':
+        case 'CUSTOM_ERROR':
+          error = result.error.error
+          break
+        case 403:
+          error = '403 Forbidden Error.'
+          break
+        case 400:
+        case 500:
+          if (isErrorWithMessage(result.error.data)) {
+            error = result.error.data.message
+          } else {
+            error = JSON.stringify(result.error.data)
+          }
+          break
+        default:
+          error = JSON.stringify(result.error)
+          break
       }
-      if (result.error.status === 403) {
-        api.dispatch(setAppErrorAC({ error: '403 Forbidden Error.' }))
-      }
-      if (result.error.status === 400 || result.error.status === 500) {
-        if (isErrorWithMessage(result.error.data)) {
-          api.dispatch(setAppErrorAC({ error: result.error.data.message }))
-        } else {
-          api.dispatch(setAppErrorAC({ error: JSON.stringify(result.error.data) }))
-        }
-      }
+      api.dispatch(setAppErrorAC({ error }))
     }
+
     return result
   },
   endpoints: () => ({}),
