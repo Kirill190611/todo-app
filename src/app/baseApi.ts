@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setAppErrorAC } from '@/app/app-slice.ts'
 import { isErrorWithMessage } from '@/common/utils'
+import { ResultCode } from '@/common/enums'
 
 export const baseApi = createApi({
   reducerPath: 'todolistsApi',
@@ -38,6 +39,12 @@ export const baseApi = createApi({
           error = JSON.stringify(result.error)
           break
       }
+      api.dispatch(setAppErrorAC({ error }))
+    }
+
+    if ((result.data as { resultCode: ResultCode }).resultCode === ResultCode.Error) {
+      const messages = (result.data as { messages: string[] }).messages
+      error = messages.length ? messages[0] : error
       api.dispatch(setAppErrorAC({ error }))
     }
 
