@@ -4,6 +4,9 @@ import { handleError } from '@/common/utils/handleError.ts'
 export const baseApi = createApi({
   reducerPath: 'todolistsApi',
   tagTypes: ['Todolist', 'Task'],
+  keepUnusedDataFor: 120,
+  refetchOnReconnect: true,
+  // refetchOnFocus: true, // needed for update date between different
   baseQuery: async (args, api, extraOptions) => {
     const result = await fetchBaseQuery({
       baseUrl: import.meta.env.VITE_BASE_URL,

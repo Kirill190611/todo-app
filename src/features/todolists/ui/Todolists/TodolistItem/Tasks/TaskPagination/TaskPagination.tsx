@@ -20,6 +20,7 @@ export const TaskPagination = ({ setPage, page, totalCount }: Props) => {
       <Pagination
         count={Math.ceil(totalCount / PAGE_SIZE)}
         page={page}
+        siblingCount={0}
         onChange={changePage}
         shape='rounded'
         color='primary'
