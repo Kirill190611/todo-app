@@ -16,7 +16,7 @@ export const TaskPagination = ({ setPage, page, totalCount }: Props) => {
   }
 
   return (
-    <div hidden={totalCount <= PAGE_SIZE}>
+    <div>
       <Pagination
         count={Math.ceil(totalCount / PAGE_SIZE)}
         page={page}
