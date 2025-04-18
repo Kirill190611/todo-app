@@ -49,7 +49,9 @@ export const tasksApi = baseApi.injectEndpoints({
         method: 'PUT',
         body: model,
       }),
-      invalidatesTags: ['Task'],
+      invalidatesTags: (_res, _error, { taskId }) => [
+        { type: 'Task', id: taskId },
+      ],
     }),
   }),
 })
