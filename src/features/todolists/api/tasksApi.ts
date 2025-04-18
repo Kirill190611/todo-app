@@ -9,9 +9,15 @@ import { baseApi } from '@/app/baseApi.ts'
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getTasks: builder.query<GetTasksResponse, string>({
-      query: (todolistId) => `todo-lists/${todolistId}/tasks`,
-      providesTags: (_res, _error, todolistId) => [
+    getTasks: builder.query<
+      GetTasksResponse,
+      { todolistId: string; params: { count: number; page: number } }
+    >({
+      query: ({ todolistId, params }) => ({
+        url: `todo-lists/${todolistId}/tasks`,
+        params,
+      }),
+      providesTags: (_res, _error, { todolistId }) => [
         { type: 'Task', id: todolistId },
       ],
     }),
@@ -24,8 +30,9 @@ export const tasksApi = baseApi.injectEndpoints({
         method: 'POST',
         body: { title },
       }),
-      invalidatesTags: (res, _error, { todolistId }) =>
-        res ? [{ type: 'Task', id: todolistId }] : [{ type: 'Task' }],
+      invalidatesTags: (_res, _error, { todolistId }) => [
+        { type: 'Task', id: todolistId },
+      ],
     }),
     removeTask: builder.mutation<
       BaseResponse,
