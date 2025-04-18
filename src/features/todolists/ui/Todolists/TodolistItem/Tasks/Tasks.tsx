@@ -17,10 +17,14 @@ export const Tasks = ({ todolist }: Props) => {
   let todolistTasks = tasks?.items
 
   if (filter === 'active') {
-    todolistTasks = todolistTasks?.filter((task) => task.status === TaskStatus.New)
+    todolistTasks = todolistTasks?.filter(
+      (task) => task.status === TaskStatus.New
+    )
   }
   if (filter === 'completed') {
-    todolistTasks = todolistTasks?.filter((task) => task.status === TaskStatus.Completed)
+    todolistTasks = todolistTasks?.filter(
+      (task) => task.status === TaskStatus.Completed
+    )
   }
 
   if (isLoading) {
@@ -33,7 +37,9 @@ export const Tasks = ({ todolist }: Props) => {
         <p>There are absent any data.</p>
       ) : (
         <List>
-          {todolistTasks?.map((task) => <TaskItem key={task.id} task={task} todolist={todolist} />)}
+          {todolistTasks?.map((task) => (
+            <TaskItem key={task.id} task={task} todolist={todolist} />
+          ))}
         </List>
       )}
     </>

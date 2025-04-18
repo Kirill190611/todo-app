@@ -1,13 +1,19 @@
 import { instance } from '@/common/instance'
 import type { BaseResponse } from '@/common/types'
-import type { DomainTask, GetTasksResponse, UpdateTaskModel } from './tasksApi.types'
+import type {
+  DomainTask,
+  GetTasksResponse,
+  UpdateTaskModel,
+} from './tasksApi.types'
 import { baseApi } from '@/app/baseApi.ts'
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTasks: builder.query<GetTasksResponse, string>({
       query: (todolistId) => `todo-lists/${todolistId}/tasks`,
-      providesTags: ['Task'],
+      // providesTags: ['Task'],
+      providesTags: (res) =>
+        res ? res.items.map(({ id }) => ({ type: 'Task', id })) : ['Task'],
     }),
     createTask: builder.mutation<
       BaseResponse<{ item: DomainTask }>,
@@ -20,7 +26,10 @@ export const tasksApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
-    removeTask: builder.mutation<BaseResponse, { todolistId: string; taskId: string }>({
+    removeTask: builder.mutation<
+      BaseResponse,
+      { todolistId: string; taskId: string }
+    >({
       query: ({ todolistId, taskId }) => ({
         url: `todo-lists/${todolistId}/tasks/${taskId}`,
         method: 'DELETE',
@@ -56,12 +65,19 @@ export const _tasksApi = {
   // OK (need to delete)
   createTask(payload: { todolistId: string; title: string }) {
     const { todolistId, title } = payload
-    return instance.post<BaseResponse<{ item: DomainTask }>>(`todo-lists/${todolistId}/tasks`, {
-      title,
-    })
+    return instance.post<BaseResponse<{ item: DomainTask }>>(
+      `todo-lists/${todolistId}/tasks`,
+      {
+        title,
+      }
+    )
   },
   // OK (need to delete)
-  updateTask(payload: { todolistId: string; taskId: string; model: UpdateTaskModel }) {
+  updateTask(payload: {
+    todolistId: string
+    taskId: string
+    model: UpdateTaskModel
+  }) {
     const { todolistId, taskId, model } = payload
     return instance.put<BaseResponse<{ item: DomainTask }>>(
       `todo-lists/${todolistId}/tasks/${taskId}`,
@@ -71,6 +87,8 @@ export const _tasksApi = {
   // OK (need to delete)
   deleteTask(payload: { todolistId: string; taskId: string }) {
     const { todolistId, taskId } = payload
-    return instance.delete<BaseResponse>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    return instance.delete<BaseResponse>(
+      `todo-lists/${todolistId}/tasks/${taskId}`
+    )
   },
 }

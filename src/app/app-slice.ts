@@ -19,12 +19,16 @@ export const appSlice = createAppSlice({
     selectIsLoggedIn: (state) => state.isLoggedIn,
   },
   reducers: (create) => ({
-    changeThemeModeAC: create.reducer<{ themeMode: ThemeMode }>((state, action) => {
-      state.themeMode = action.payload.themeMode
-    }),
-    setAppStatusAC: create.reducer<{ status: RequestStatus }>((state, action) => {
-      state.status = action.payload.status
-    }),
+    changeThemeModeAC: create.reducer<{ themeMode: ThemeMode }>(
+      (state, action) => {
+        state.themeMode = action.payload.themeMode
+      }
+    ),
+    setAppStatusAC: create.reducer<{ status: RequestStatus }>(
+      (state, action) => {
+        state.status = action.payload.status
+      }
+    ),
     setAppErrorAC: create.reducer<{ error: string | null }>((state, action) => {
       state.error = action.payload.error
     }),
@@ -54,9 +58,18 @@ export const appSlice = createAppSlice({
 
 //2:28:41
 
-export const { selectThemeMode, selectAppStatus, selectAppError, selectIsLoggedIn } =
-  appSlice.selectors
-export const { changeThemeModeAC, setAppStatusAC, setAppErrorAC, setIsLoggedIn } = appSlice.actions
+export const {
+  selectThemeMode,
+  selectAppStatus,
+  selectAppError,
+  selectIsLoggedIn,
+} = appSlice.selectors
+export const {
+  changeThemeModeAC,
+  setAppStatusAC,
+  setAppErrorAC,
+  setIsLoggedIn,
+} = appSlice.actions
 export const appReducer = appSlice.reducer
 
 export type ThemeMode = 'dark' | 'light'

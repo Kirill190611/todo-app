@@ -5,10 +5,16 @@ import { baseApi } from '@/app/baseApi.ts'
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    me: builder.query<BaseResponse<{ id: number; email: string; login: string }>, void>({
+    me: builder.query<
+      BaseResponse<{ id: number; email: string; login: string }>,
+      void
+    >({
       query: () => `auth/me`,
     }),
-    login: builder.mutation<BaseResponse<{ userId: number; token: string }>, LoginArgs>({
+    login: builder.mutation<
+      BaseResponse<{ userId: number; token: string }>,
+      LoginArgs
+    >({
       query: (args) => ({
         url: `auth/login`,
         method: 'POST',
@@ -29,7 +35,10 @@ export const { useMeQuery, useLoginMutation, useLogoutMutation } = authApi
 export const _authApi = {
   //OK (need to delete)
   login(payload: LoginArgs) {
-    return instance.post<BaseResponse<{ userId: number; token: string }>>(`auth/login`, payload)
+    return instance.post<BaseResponse<{ userId: number; token: string }>>(
+      `auth/login`,
+      payload
+    )
   },
   //OK (need to delete)
   logout() {
@@ -37,6 +46,8 @@ export const _authApi = {
   },
   //OK (need to delete)
   me() {
-    return instance.get<BaseResponse<{ id: number; email: string; login: string }>>(`auth/me`)
+    return instance.get<
+      BaseResponse<{ id: number; email: string; login: string }>
+    >(`auth/me`)
   },
 }

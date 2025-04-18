@@ -9,7 +9,10 @@ export const baseApi = createApi({
       baseUrl: import.meta.env.VITE_BASE_URL,
       prepareHeaders: (headers) => {
         headers.set('API-KEY', `${import.meta.env.VITE_API_KEY}`)
-        headers.set('Authorization', `Bearer ${localStorage.getItem('sn-token')}`)
+        headers.set(
+          'Authorization',
+          `Bearer ${localStorage.getItem('sn-token')}`
+        )
       },
     })(args, api, extraOptions)
 

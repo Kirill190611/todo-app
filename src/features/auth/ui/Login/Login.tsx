@@ -1,4 +1,8 @@
-import { selectIsLoggedIn, selectThemeMode, setIsLoggedIn } from '@/app/app-slice'
+import {
+  selectIsLoggedIn,
+  selectThemeMode,
+  setIsLoggedIn,
+} from '@/app/app-slice'
 import { useAppDispatch, useAppSelector } from '@/common/hooks'
 import { getTheme } from '@/common/theme'
 import Button from '@mui/material/Button'
@@ -83,7 +87,11 @@ export const Login = () => {
               error={!!errors.email}
               {...register('email')}
             />
-            {errors.email && <span className={styles.errorMessage}>{errors.email.message}</span>}
+            {errors.email && (
+              <span className={styles.errorMessage}>
+                {errors.email.message}
+              </span>
+            )}
             <TextField
               type='password'
               label='Password'
@@ -92,7 +100,9 @@ export const Login = () => {
               {...register('password')}
             />
             {errors.password && (
-              <span className={styles.errorMessage}>{errors.password.message}</span>
+              <span className={styles.errorMessage}>
+                {errors.password.message}
+              </span>
             )}
             <FormControlLabel
               label='Remember me'

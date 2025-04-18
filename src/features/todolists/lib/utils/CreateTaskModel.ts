@@ -1,4 +1,7 @@
-import { DomainTask, UpdateTaskModel } from '@/features/todolists/api/tasksApi.types.ts'
+import {
+  DomainTask,
+  UpdateTaskModel,
+} from '@/features/todolists/api/tasksApi.types.ts'
 
 export const CreateTaskModel = (
   task: DomainTask,
