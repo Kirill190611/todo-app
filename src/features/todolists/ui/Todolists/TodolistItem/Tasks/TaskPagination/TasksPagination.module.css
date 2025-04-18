@@ -1,0 +1,11 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.totalCount {
+    display: flex;
+    justify-content: right;
+    margin: 0 16px 10px 0;
+}

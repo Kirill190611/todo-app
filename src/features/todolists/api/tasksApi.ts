@@ -6,16 +6,17 @@ import type {
   UpdateTaskModel,
 } from './tasksApi.types'
 import { baseApi } from '@/app/baseApi.ts'
+import { PAGE_SIZE } from '@/common/constants/constants.ts'
 
 export const tasksApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getTasks: builder.query<
       GetTasksResponse,
-      { todolistId: string; params: { count: number; page: number } }
+      { todolistId: string; params: { page: number } }
     >({
       query: ({ todolistId, params }) => ({
         url: `todo-lists/${todolistId}/tasks`,
-        params,
+        params: { ...params, count: PAGE_SIZE },
       }),
       providesTags: (_res, _error, { todolistId }) => [
         { type: 'Task', id: todolistId },

@@ -4,6 +4,8 @@ import List from '@mui/material/List'
 import { useGetTasksQuery } from '@/features/todolists/api/tasksApi.ts'
 import { TasksSkeleton } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TasksSkeleton/TasksSkeleton.tsx'
 import { DomainTodolist } from '@/features/todolists/lib/types'
+import { TaskPagination } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskPagination/TaskPagination.tsx'
+import { useState } from 'react'
 
 type Props = {
   todolist: DomainTodolist
@@ -12,9 +14,11 @@ type Props = {
 export const Tasks = ({ todolist }: Props) => {
   const { id, filter } = todolist
 
+  const [page, setPage] = useState(1)
+
   const { data: tasks, isLoading } = useGetTasksQuery({
     todolistId: id,
-    params: { count: 4, page: 1 },
+    params: { page },
   })
 
   let todolistTasks = tasks?.items
@@ -39,11 +43,18 @@ export const Tasks = ({ todolist }: Props) => {
       {todolistTasks?.length === 0 ? (
         <p>There are absent any data.</p>
       ) : (
-        <List>
-          {todolistTasks?.map((task) => (
-            <TaskItem key={task.id} task={task} todolist={todolist} />
-          ))}
-        </List>
+        <>
+          <List>
+            {todolistTasks?.map((task) => (
+              <TaskItem key={task.id} task={task} todolist={todolist} />
+            ))}
+          </List>
+          <TaskPagination
+            totalCount={tasks?.totalCount || 0}
+            page={page}
+            setPage={setPage}
+          />
+        </>
       )}
     </>
   )
