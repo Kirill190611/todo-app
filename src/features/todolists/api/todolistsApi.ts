@@ -12,7 +12,6 @@ export const todolistsApi = baseApi.injectEndpoints({
         return todolists.map((todolist) => ({
           ...todolist,
           filter: 'all',
-          entityStatus: 'idle',
         }))
       },
       providesTags: ['Todolist'],
