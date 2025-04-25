@@ -7,6 +7,7 @@ import { DomainTodolist } from '@/features/todolists/lib/types'
 import { TaskPagination } from '@/features/todolists/ui/Todolists/TodolistItem/Tasks/TaskPagination/TaskPagination.tsx'
 import { useState } from 'react'
 import { PAGE_SIZE } from '@/common/constants/constants.ts'
+import styles from './Tasks.module.css'
 
 type Props = {
   todolist: DomainTodolist
@@ -45,7 +46,7 @@ export const Tasks = ({ todolist }: Props) => {
         <p>There are absent any data.</p>
       ) : (
         <>
-          <List>
+          <List className={styles.wrapper}>
             {todolistTasks?.map((task) => (
               <TaskItem key={task.id} task={task} todolist={todolist} />
             ))}

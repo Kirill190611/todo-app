@@ -6,9 +6,14 @@ import IconButton from '@mui/material/IconButton'
 type Props = {
   onCreateItem: (title: string) => void
   disabled?: boolean
+  className?: string
 }
 
-export const CreateItemForm = ({ onCreateItem, disabled }: Props) => {
+export const CreateItemForm = ({
+  onCreateItem,
+  disabled,
+  className,
+}: Props) => {
   const [title, setTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
 
@@ -34,7 +39,7 @@ export const CreateItemForm = ({ onCreateItem, disabled }: Props) => {
   }
 
   return (
-    <div>
+    <div className={className}>
       <TextField
         label={'Enter a title'}
         variant={'outlined'}

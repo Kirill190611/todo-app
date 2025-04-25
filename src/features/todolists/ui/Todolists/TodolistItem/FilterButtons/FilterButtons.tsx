@@ -7,6 +7,7 @@ import {
   type DomainTodolist,
   type FilterValues,
 } from '@/features/todolists/lib/types'
+import styles from './FilterButtons.module.css'
 
 type Props = {
   todolist: DomainTodolist
@@ -33,7 +34,7 @@ export const FilterButtons = ({ todolist }: Props) => {
   }
 
   return (
-    <Box sx={containerSx}>
+    <Box sx={containerSx} className={styles.container}>
       <Button
         variant={filter === 'all' ? 'outlined' : 'text'}
         color={'inherit'}
