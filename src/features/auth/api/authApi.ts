@@ -1,5 +1,4 @@
 import { LoginArgs } from '@/features/auth/api/authApi.types.ts'
-import { instance } from '@/common/instance'
 import { BaseResponse } from '@/common/types'
 import { baseApi } from '@/app/baseApi.ts'
 
@@ -31,23 +30,3 @@ export const authApi = baseApi.injectEndpoints({
 })
 
 export const { useMeQuery, useLoginMutation, useLogoutMutation } = authApi
-
-export const _authApi = {
-  //OK (need to delete)
-  login(payload: LoginArgs) {
-    return instance.post<BaseResponse<{ userId: number; token: string }>>(
-      `auth/login`,
-      payload
-    )
-  },
-  //OK (need to delete)
-  logout() {
-    return instance.delete<BaseResponse>(`auth/login`)
-  },
-  //OK (need to delete)
-  me() {
-    return instance.get<
-      BaseResponse<{ id: number; email: string; login: string }>
-    >(`auth/me`)
-  },
-}
