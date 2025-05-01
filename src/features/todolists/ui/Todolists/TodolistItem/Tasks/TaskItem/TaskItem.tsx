@@ -13,6 +13,7 @@ import {
 } from '@/features/todolists/api/tasksApi.ts'
 import { CreateTaskModel } from '@/features/todolists/lib/utils/CreateTaskModel.ts'
 import { DomainTodolist } from '@/features/todolists/lib/types'
+import styles from './TaskItem.module.css'
 
 type Props = {
   task: DomainTask
@@ -44,7 +45,7 @@ export const TaskItem = ({ task, todolist }: Props) => {
 
   return (
     <ListItem sx={getListItemSx(isTaskCompleted)}>
-      <div>
+      <div className={styles.wrapper}>
         <Checkbox checked={isTaskCompleted} onChange={changeTaskStatus} />
         <EditableSpan value={task.title} onChange={changeTaskTitle} />
       </div>
